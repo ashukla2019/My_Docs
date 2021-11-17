@@ -1,0 +1,108 @@
+*******************************************SOLID principal********************************
+S- Single-responsiblity Principle
+O- Open-closed Principle
+L- Liskov Substitution Principle
+I- Interface Segregation Principle
+D- Dependency Inversion Principle
+
+Cohesion: refers to what the class (or module) can do. 
+Low cohesion would mean that the class does a great variety of actions - it is broad, 
+unfocused on what it should do. 
+High cohesion means that the class is focused on what it should be doing.
+
+coupling, it refers to how related or dependent two classes/modules are toward each other. 
+For low coupled classes, changing something major in one class should not affect the other. 
+High coupling would make it difficult to change and maintain your code.
+
+Single responsibility principle: 
+High cohesion: Responsibility over single purpose.
+One class should take single responsibility. For example, developing a game. Class myGame will have config settings and set player position/update player position should be done by other class.
+
+Open/Closed principals: Open for extension but closed for modification.
+Abstract interfcaes:
+problematic code:
+enum class SensorModel {
+   Good,
+   Better
+};
+
+struct DistanceSensor {
+   DistanceSensor(SensorModel model) : mModel{model} {}
+   int getDistance() {
+       switch (mModel) {
+           case SensorModel::Good :
+               // Business logic for "Good" model
+           case SensorModel::Better :
+               // Business logic for "Better" model
+       }
+   }
+};
+---> we cannot extend functionality suppose want to add new Sensore Model. It required code changes in DistanceSensor class.
+struct DistanceSensor {
+   virtual ~DistanceSensor() = default;
+   virtual int getDistance() = 0;
+};
+
+struct GoodDistanceSensor : public DistanceSensor {
+   int getDistance() override {
+       // Business logic for "Good" model
+   }
+};
+
+struct BetterDistanceSensor : public DistanceSensor {
+   int getDistance() override {
+       // Business logic for "Better" model
+   }
+};
+Liskov substitutional principal:
+ A subclass should satisfy behavoural expectioans of parant class.
+
+Interface segregration:
+No client should be forced to depend on methods it does not use. ISP splits interfaces that are very large into smaller and more specific ones so that clients will only have to know about the methods that are of interest to them.
+/* -------------------------------- Interfaces ----------------------------- */
+struct IPrinter 
+{
+    virtual void print(Document &doc) = 0;
+};
+struct IScanner 
+{
+    virtual void scan(Document &doc) = 0;
+};
+/* ------------------------------------------------------------------------ */
+struct Printer : IPrinter 
+{
+	void print(Document &doc) override;
+};
+struct Scanner : IScanner 
+{
+    void scan(Document &doc) override;
+};
+Dependency inversion principal:
+low coupling. High level module should not depend on low level module. Both should depend on abstract interfaces.
+
+Problematic code:
+struct AwsCloud {
+   void uploadToS3Bucket(string filepath) { /* ... */ }
+};
+
+struct FileUploader {
+   FileUploader(AwsCloud& awsCloud);
+   void scheduleUpload(string filepath);
+};
+
+here Fileuploader depends on AwsCloud  but will be difficult if some want to use other cloud option then it requires to change the high lelvel class implemenatation.
+
+Solution:
+struct Cloud {
+   virtual ~Cloud() = default;
+   virtual void upload(string filepath) = 0;
+};
+
+struct AwsCloud : public Cloud {
+   void upload(string filepath) override { /* ... */ }
+};
+
+struct FileUploader {
+   FileUploader(Cloud& cloud);
+   void scheduleUpload(string filepath);
+};
