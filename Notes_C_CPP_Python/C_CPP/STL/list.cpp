@@ -15,11 +15,11 @@ int main()
 	//initialize list with initializer list
 	list<int>lt = {10, 20, 30, 40, 20};
 	
-	//initialize vector with other container
+	//initialize list with other container
 	//string str("Hello");
 	//list<char>lt(str.begin(), str.end());
 	
-	//iterate vector 
+	//iterate list 
 	/*for(auto it = lt.begin(); it != lt.end(); it++)
 	{
 		cout<<"values in list:"<<*it<<endl;
@@ -28,8 +28,12 @@ int main()
 	/*iterate in reverse order:
 	for(auto it = vec.rbegin(); it != vec.rend(); it++)
 	{
-		cout<<"values in vector:"<<*it<<endl;
+		cout<<"values in list:"<<*it<<endl;
 	}*/
+	
+	//push_back and push_front
+	//lt.push_front(11);
+	//lt.push_back(18);
 	
 	//Find element:
 	/*
@@ -61,12 +65,5 @@ int main()
 	
 	//lt.erase(lt.begin(), lt.begin()); //by position range	
 	
-	//Remove all occurrences of an element from vector in O(n) complexity:
-	//int elem = 20;
-	//lt.erase(std::remove(lt.begin(), lt.end(), elem), lt.end());
-	//for(auto it = lt.begin(); it != lt.end(); it++)
-	//{
-	//	cout<<"values in list:"<<*it<<endl;
-	//}
 	return 0;
 }
