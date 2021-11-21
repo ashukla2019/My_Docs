@@ -1,6 +1,15 @@
-// Function to find the element  
-// occurring odd number of times 
-// XOR of all elements gives us odd occurring element
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+
+// Function to find the element occurring odd number of times 
+// XOR of all elements gives us odd occurring element: xor will return true if both digits are different.
+// a ^ a = 0
+// b ^ b = 0
+// a ^ 0 = a
+// b ^ 0 = b
+
+//expression: a ^ b ^ a ^ b ^ a = a^a =0 and b^b =0 now 0^a = a means if any number is odd time will not be zero...
 int getOddOccurrence(int ar[], int ar_size) 
 { 
     int res = 0;  
@@ -9,6 +18,7 @@ int getOddOccurrence(int ar[], int ar_size)
       
     return res; 
 } 
+
   
 // Function to get the missing number
 int getMissingNo(int a[], int n)
@@ -22,7 +32,7 @@ int getMissingNo(int a[], int n)
 
 //An element is leader if it is greater than all the elements to its right side. And the rightmost element is always a leader. For ////example //int the array {16, 17, 4, 3, 5, 2}, leaders are 17, 5 and 2
 /*C++ Function to print leaders in an array */
-oid printLeaders(int arr[], int size) 
+void printLeaders(int arr[], int size) 
 { 
     int max_from_right =  arr[size-1]; 
   
@@ -72,140 +82,8 @@ void findMajority(int arr[], int size)
 }
 
 
-//Quick sort algo
-int split(int a[], int lower, int upper)
-{
-	int pivot = a[lower];
-	int p = lower+1;
-	int q = upper;
-	int temp;
-	while(q>=p)
-	{
-		while(a[p] < pivot)
-		{
-			p++;
-		}
-		while(a[q] > pivot)
-		{
-			q--;
-		}
-		if(q>p)
-		{
-			temp = a[p];
-			a[p] = a[q];
-			a[q] = temp;
-		}
-	}
-	temp = a[lower];
-	a[lower] = a[q];
-	a[q] = temp;
-	return q;
-	
-}
 
-void quicksort(int a[], int lower, int upper)
-{
-	if(upper > lower)
-	{
-		int i = split(a, lower, upper);
-		quicksort(a, lower, i-1);
-		quicksort(a, i+1, upper);
-	}
-}
-
-//selection sort and bubble sort:
-int* selection_sort(int*p, int len)
-{
-	for(int i =0; i<len-1; i++)
-	{
-		for(int j = i+1; j<len-1; j++)
-		{
-			if(p[i]>p[j])
-			{
-				int temp = p[i];
-				p[i] = p[j];
-				p[j] = temp;
-			}
-		}
-	}
-	return p;
-}
-
-int* bubble_sort(int*p, int len)
-{
-	for(int i =0; i<len-1; i++)
-	{
-		for(int j = 0; j<=len-i-1; j++)
-		{
-			if(p[j]>p[j+1])
-			{
-				int temp = p[j];
-				p[j] = p[j+1];
-				p[j+1] = temp;
-			}
-		}
-	}
-	return p;
-}
-
-//
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---------------------------------------------------------------------------------------
-// C function to find maximum in arr[] of size n
+//C function to find maximum in arr[] of size n
 int largest(int arr[], int n) {
     int i;
 
@@ -215,7 +93,8 @@ int largest(int arr[], int n) {
     // Traverse array elements from second and
     // compare every element with current max
     for (i = 1; i < n; i++)
-        if (arr[i] > max) max = arr[i];
+        if (arr[i] > max) 
+			max = arr[i];
 
     return max;
 }
@@ -232,7 +111,7 @@ int* game_with_number(int arr[], int n)
     return arr;
     
 }
-//Cyclically rotate an array by one
+//Cylendrically rotate an array by one
 void rotate(int arr[], int n)
 {
     int x = arr[n-1];
