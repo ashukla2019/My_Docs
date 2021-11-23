@@ -19,6 +19,40 @@ int getOddOccurrence(int ar[], int ar_size)
     return res; 
 } 
 
+// Function to remove duplicate elements from sorted array
+void removeDuplicates(int arr[], int n)
+{
+
+	set<int>s(arr, arr+n);
+	cout << "\nAfter removing duplicates:\n";
+	for (auto it = s.begin(); it != s.end(); ++it)
+		cout << *it << ", ";
+	cout << '\n';
+}
+
+// Function to remove duplicate elements from unsorted array
+// Function to remove duplicate elements
+void remDup(int arr[], int n)
+{
+
+	// Initialise a vector to store the array values
+	vector<int> v(arr, arr + n);
+	// sorting vector
+	sort(v.begin(), v.end());
+
+	// using unique() method to remove duplicates
+	auto it = unique(v.begin(), v.end());
+
+	// resize the new vector
+	v.resize(distance(v.begin(), it));
+
+	// Print the array with duplicates removed
+	cout << "\nAfter removing duplicates:\n";
+	for (it = v.begin(); it != v.end(); ++it)
+		cout << *it << " ";
+	cout << '\n';
+}
+
   
 // Function to get the missing number
 int getMissingNo(int a[], int n)
