@@ -6,6 +6,21 @@ Set :
 	when we search an element inside the set then it takes only log(n) complexity to search it.
 */
 
+/*    |     set             | unordered_set
+---------------------------------------------------------
+Ordering        | increasing  order   | no ordering
+                | (by default)        |
+
+Implementation  | Self balancing BST  | Hash Table
+                | like Red-Black Tree |  
+
+search time     | log(n)              | O(1) -> Average 
+                |                     | O(n) -> Worst Case
+
+Insertion time  | log(n) + Rebalance  | Same as search
+                      
+Deletion time   | log(n) + Rebalance  | Same as search
+
 /*
 prefer set:
 •	if you wish to filter multiple identical values
