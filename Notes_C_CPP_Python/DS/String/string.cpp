@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 
 //Swap two strings:
@@ -9,55 +10,68 @@ void swap(char *str1, char *str2)
   str2 = temp;
 }  
 
-//Get frequency of all chars
-void frequency(string str)
+//Get frequency of all chars in given string
+void printFrequency(string str)
 {
-	map<char , int >m;
-      
-	for(int i=0; i<str.length();i++)
-	{   
-        m[str[i]]++;
-	}
-        
-    for(auto it = m.begin(); it!=m.end(); it++)
+	// Define an unordered_map
+	unordered_map<char, int> M;
+
+	// Traverse string str check if
+	// current character is present
+	// or not
+	for (int i = 0; str[i]; i++)
 	{
-        cout<<it->first<<" - "<<it->second<<endl;
+		// If the current characters is not found then insert current characters with
+		// frequency 1
+		if (M.find(str[i]) == M.end())
+		{
+			M.insert(make_pair(str[i], 1));
+			
+		}
+
+		// Else update the frequency
+		else
+		{
+			M[str[i]]++;
+		}
+	}
+
+	// Traverse the map to print the
+	// frequency
+	for (auto& it : M) 
+	{
+		cout << it.first << ' ' << it.second << '\n';
 	}
 }
 
-//CPP program to remove duplicate character from character array and print in sorted
-void removeDuplicate(string str)
+
+// Function to remove all occurrences of given string
+string removeCharacters(string S, char c)
 {
-    std::vector<char> v(str.begin(), str.end());
-    auto end = v.end();
-    for (auto it = v.begin(); it != end; ++it) 
-    {
-        end = std::remove(it + 1, end, *it);
-        
-    }
- 
-    v.erase(end, v.end());
-    for (auto it = v.cbegin(); it != v.cend(); ++it)
-        std::cout << *it << ' ';
+  
+    S.erase(remove(S.begin(), S.end(), c),S.end());
+  
+    return S;
 }
     
 // A function to check if a string str is palindrome
-void isPalindrome(char str[])
+string isPalindrome(string S)
 {
-    // Start from leftmost and rightmost corners of str
-    int l = 0;
-    int h = strlen(str) - 1;
+	int length = S.length();
+    // Iterate over the range [0, N/2]
+    for (int i = 0; i < length / 2; i++) 
+	{
  
-    // Keep comparing characters while they are same
-    while (h > l)
-    {
-        if (str[l++] != str[h--])
-        {
-            printf("%s is not a palindrome\n", str);
-            return;
+        // If S[i] is not equal to
+        // the S[N-i-1]
+        if (S[i] != S[length - i - 1]) 
+		{
+            // Return No
+            return "No";
         }
     }
-    printf("%s is a palindrome\n", str);
+    // Return "Yes"
+    return "Yes";
 }
 
 int main()
