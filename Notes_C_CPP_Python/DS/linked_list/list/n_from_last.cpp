@@ -34,6 +34,7 @@ void display(struct node* head)
 	}
 }
 
+//By recursion....
 int findKthNode(struct node* node, int k)
 {
     // base case
@@ -55,6 +56,23 @@ int findKthNode(struct node* node, int k)
     return count;
 }
 
+//by using two pointers...
+int getNthFromLast(struct node* head, int k)
+{
+	node* first = head;
+	for(int i =1; i < k; i++)
+	{
+		first = first->next;
+	}
+	node* second = head;
+	while(first->next != nullptr)
+	{
+ 		first = first->next;
+		second = second->next;
+	}
+	return second->data;
+}
+
 int main()
 {
 	node* head = nullptr;
@@ -65,7 +83,7 @@ int main()
 	add_node(&head, 25);
 	add_node(&head, 30);
 	//display(head);
-	findKthNode(head, 4);
+	int data = findKthNode(head, 4);
 	return 0;
 	
 }
