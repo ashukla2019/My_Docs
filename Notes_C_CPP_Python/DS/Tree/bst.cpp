@@ -41,20 +41,20 @@ struct Node* Delete(struct Node *root, int data)
 		//Case 2: One child 
 		else if(root->left == NULL) 
 		{
-			struct Node *temp = root;
+			Node *temp = root;
 			root = root->right;
 			delete temp;
 		}
 		else if(root->right == NULL)
 		{
-			struct Node *temp = root;
+			Node *temp = root;
 			root = root->left;
 			delete temp;
 		}
 		// case 3: 2 children
 		else 
 		{ 
-			struct Node *temp = FindMin(root->right);
+			Node *temp = FindMin(root->right);
 			root->data = temp->data;
 			root->right = Delete(root->right,temp->data);
 		}
@@ -73,6 +73,33 @@ void Inorder(Node *root)
 	Inorder(root->left);       //Visit left subtree
 	printf("%d ",root->data);  //Print data
 	Inorder(root->right);      // Visit right subtree
+}
+
+//Function to visit nodes in Preorder
+void Preorder(Node *root) 
+{
+	if(root == NULL)
+	{
+		return;
+	}
+ 
+	//Visit left subtree
+	printf("%d ",root->data);  //Print data
+	Preorder(root->left);  
+	Preorder(root->right);      // Visit right subtree
+}
+
+//Function to visit nodes in Postorder
+void Postorder(Node *root) 
+{
+	if(root == NULL)
+	{
+		return;
+	}
+ 
+	Postorder(root->left);       //Visit left subtree
+	Postorder(root->right);      // Visit right subtree
+	printf("%d ",root->data);    //Print data
 }
  
 // Function to Insert Node in a Binary Search Tree
@@ -205,7 +232,7 @@ int main()
 	//level order traversal
 	bfs(root);
 	// Deleting node with value 5, change this value to test other cases
-	root = Delete(root,5);
+	//root = Delete(root,5);
 	
 	// Ask user to enter a number.  
 	int number;
@@ -229,5 +256,9 @@ int main()
 	Inorder(root);
 	int height = treeHeight(root);
 	cout<<"tree height"<<height<<endl;
+	cout<<"Preorder: ";
+	Preorder(root);
+	cout<<"Postorder: ";
+	Postorder(root);
 	cout<<"\n";
 }
