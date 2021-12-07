@@ -30,34 +30,32 @@ prefer vector:
 •	if you wish to parse items in same order as you pushed them (assuming you don't process the vector order)
 */
 
-#include<iostream>
-#include<set>
-#include<string>
-using namespace std;
-int main()
+// erasing from set
+#include <iostream>
+#include <set>
+
+int main ()
 {
-    std::set<std::string> setOfNumbers;
-    // Lets insert four elements
-    setOfNumbers.insert("first");
-    setOfNumbers.insert("second");
-    setOfNumbers.insert("third");
-    setOfNumbers.insert("first"); //this is duplicate, so will not be added in set.
-    // Only 3 elements will be inserted
-    std::cout<<"Set Size = "<<setOfNumbers.size()<<std::endl;
-    // Iterate through all the elements in a set and display the value.
-    
-	//search an element in std::set
-	// Search for element in set using find member function
-     // Search for element in set using find member function
-    std::set<std::string>::iterator it = setOfNumbers.find("second");
-    if(it != setOfNumbers.end())
-        std::cout<<"'first'  found"<<std::endl;
-    else
-        std::cout<<"'first' not found"<<std::endl;
-	
-	//iterator  erase (const_iterator position);
-	//size_type erase (const value_type& val);
-	//iterator  erase (const_iterator first, const_iterator last);
-	
-    return 0;
+  std::set<int> myset;
+  std::set<int>::iterator it;
+
+  // insert some values:
+  for (int i=1; i<10; i++) myset.insert(i*10);  // 10 20 30 40 50 60 70 80 90
+
+  it = myset.begin();
+  ++it;                                         // "it" points now to 20
+
+  myset.erase (it); //erase by position
+
+  myset.erase (40); //erase value from set.
+
+  it = myset.find (60);
+  myset.erase (it, myset.end()); //erase values using range....
+
+  std::cout << "myset contains:";
+  for (it=myset.begin(); it!=myset.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
 }
