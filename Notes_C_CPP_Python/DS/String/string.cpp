@@ -44,54 +44,6 @@ void printFrequency(string str)
 	}
 }
 
-/*
-//Parse string and return if string contains int/float/alphanumeric
-
-enum type
-{
-	inttype,
-	floattype,
-	alphanumeric
-};
-
-int checkStringType(char* str)
-{
-	int length = strlen(str);
-	int type;
-	for(int i = 0; i< length; i++)
-	{
-		if(str[i] == '.')
-		{
-			type = floattype;
-			break;
-		}
-		else if(!isdigit(str[i]))
-		{
-			type = alphanumeric;
-			break;
-		}
-		else
-		{
-			type = inttype;
-		}
-	}
-	return type;
-}
-
-// Driver Code 
-int main() 
-{ 
-	char str[] = "121";
-	cout<<"type of string is:"<<checkStringType(str)<<endl;
-	return 0; 
-} 
-
-
-
-
-
-*/
-
 
 // Function to remove all occurrences of given string
 string removeCharacters(string S, char c)

@@ -1,5 +1,21 @@
+/*Binary search tress is non linear data structure, which can have atmost 2 children.
+
+	            5   ----> root
+			   / \
+			  3   10 ---> children of root(5). 3 and 10 are sibling
+			 / \   \
+			1   4   11 ----> 1, 4 are children of 3 and 11 is children of 10. 1,4 and 11 are leaf node.
+
+depth of node: path from root to that node. ex: depth of(3, 10) = 1
+depth of(1, 4, 11) = 2
+
+height of node: path from that node to longest leaf node.
+height of 5 = 2
+*/
+
 #include<iostream>
 #include<queue>
+
 using namespace std;
 class Node 
 {
@@ -73,33 +89,6 @@ void Inorder(Node *root)
 	Inorder(root->left);       //Visit left subtree
 	printf("%d ",root->data);  //Print data
 	Inorder(root->right);      // Visit right subtree
-}
-
-//Function to visit nodes in Preorder
-void Preorder(Node *root) 
-{
-	if(root == NULL)
-	{
-		return;
-	}
- 
-	//Visit left subtree
-	printf("%d ",root->data);  //Print data
-	Preorder(root->left);  
-	Preorder(root->right);      // Visit right subtree
-}
-
-//Function to visit nodes in Postorder
-void Postorder(Node *root) 
-{
-	if(root == NULL)
-	{
-		return;
-	}
- 
-	Postorder(root->left);       //Visit left subtree
-	Postorder(root->right);      // Visit right subtree
-	printf("%d ",root->data);    //Print data
 }
  
 // Function to Insert Node in a Binary Search Tree
@@ -232,7 +221,7 @@ int main()
 	//level order traversal
 	bfs(root);
 	// Deleting node with value 5, change this value to test other cases
-	//root = Delete(root,5);
+	root = Delete(root,5);
 	
 	// Ask user to enter a number.  
 	int number;
@@ -256,9 +245,5 @@ int main()
 	Inorder(root);
 	int height = treeHeight(root);
 	cout<<"tree height"<<height<<endl;
-	cout<<"Preorder: ";
-	Preorder(root);
-	cout<<"Postorder: ";
-	Postorder(root);
 	cout<<"\n";
 }

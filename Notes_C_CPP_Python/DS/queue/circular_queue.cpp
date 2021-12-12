@@ -4,22 +4,17 @@ using namespace std;
 
 class CircularQueue 
 {
-  private:
+private:
 	int front;
 	int rear;
 	int arr[MAX];
 	int itemCount;
 
-  public:
+public:
 	CircularQueue() 
 	{
-      itemCount = 0;
       front = -1;
       rear = -1;
-      for (int i = 0; i < MAX; i++) 
-	  {
-        arr[i] = 0;
-      }
     }
 	void enqueue(int val)
 	{
@@ -41,54 +36,56 @@ class CircularQueue
 			arr[rear] = val;
 
 		}
-		itemCount++;
+	}
 
-  }
+  	int dequeue() 
+  	{
+    	int x = 0;
+    	if (front == -1 && rear == -1) 
+		{
+      		cout << "Queue is Empty" << endl;
+      		
+    	} 
+		else if (rear == front) 
+		{
+      		x = arr[rear];
+      		rear = -1;
+      		front = -1;
+      		return x;
+    	} 
+		else 
+		{
+      		x = arr[front];
+      		arr[front] = 0;
+      		front = (front + 1) % MAX;
+     		return x;
+    	}
+	}
 
-  int dequeue() 
-  {
-    int x = 0;
-    if (front == -1 && rear == -1) 
+  	void display() 
 	{
-      cout << "Queue is Empty" << endl;
-      return x;
-    } 
-	else if (rear == front) 
-	{
-      x = arr[rear];
-      rear = -1;
-      front = -1;
-      itemCount--;
-      return x;
-    } 
-	else 
-	{
-      x = arr[front];
-      arr[front] = 0;
-      front = (front + 1) % 5;
-      itemCount--;
-      return x;
-    }
-  }
+    	int i = front;
+  		while(i != rear)
+  		{          
+    		cout<<arr[i]<<endl;
+    		i = (i+1) % MAX;
+      	}
+     	cout<<arr[rear]<<endl;
+   		
+  	}
 
-  int count() {
-    return (itemCount);
-  }
-
-  void display() {
-    cout << "All values in the Queue are - " << endl;
-    for (int i = 0; i < 5; i++) {
-      cout << arr[i] << "  ";
-    }
-  }
 
 };
 
-int main() {
+int main() 
+{
   CircularQueue q1;
   q1.enqueue(10);
   q1.enqueue(20);
   q1.enqueue(30);
+  q1.enqueue(40);
+  q1.enqueue(50);
+  q1.enqueue(60);
   q1.display();
   q1.dequeue();
   q1.display();

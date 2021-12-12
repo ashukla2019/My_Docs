@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+//complexity: o(logn)
 void binarySearch(int arr[], int lower, int upper, int num) 
 { 
     while (lower <= upper)
@@ -11,18 +12,23 @@ void binarySearch(int arr[], int lower, int upper, int num)
         if (arr[mid] == num) 
 		{
             cout<<"number found at position"<<mid<<endl; 
+		}
   
         // If number greater, ignore left half 
         if (arr[mid] < num) 
+		{
             lower = mid + 1; 
+		}	
   
         // If number is smaller, ignore right half 
         else
+		{
            upper = mid - 1; 
 		} 
 	} 
 }
 
+//complexity: o(n)
 void linearSearch(int* p, int num, int len)
 {
 	bool flag_found = false;

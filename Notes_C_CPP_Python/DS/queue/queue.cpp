@@ -24,8 +24,7 @@ class queue
 			{
 				front = 0;
 			}
-			rear++;
-			items[rear] = value;
+			items[++rear] = value;
 		}
 	  }
 
