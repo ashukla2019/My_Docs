@@ -6,37 +6,47 @@ Factory Method defines a method, which should be used for creating objects inste
 
 #include <iostream>
 
-class Button {
+class Button 
+{
 public:
         virtual void paint() = 0;
 };
  
-class OSXButton: public Button {
+class OSXButton: public Button
+{
 public:
-        void paint() {
+        void paint() 
+		{
                 std::cout << "OSX button \n";
         }
 };
  
-class WindowsButton: public Button  {
+class WindowsButton: public Button  
+{
 public:
-        void paint() {
+        void paint() 
+		{
                 std::cout << "Windows button \n";
         }
 };
  
-class GUIFactory {
+class GUIFactory 
+{
 public:
         virtual Button *createButton(char *) = 0;
 };
 
-class Factory: public GUIFactory {    //Factory class
+class Factory: public GUIFactory 
+{    //Factory class
 public:
-        Button *createButton(char *type) {    //Factory method
-                if(strcmp(type,"Windows") == 0) {
+        Button *createButton(char *type) 
+		{    //Factory method
+                if(strcmp(type,"Windows") == 0) 
+				{
                         return new WindowsButton;
                 }
-                else if(strcmp(type,"OSX") == 0) {
+                else if(strcmp(type,"OSX") == 0) 
+				{
                         return new OSXButton;
                 }
         }
