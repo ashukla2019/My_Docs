@@ -5,6 +5,23 @@ void deleteNode(ListNode* node)
 	node->next = node->next->next;
 }
 
+//Get the nth node from the end of linked list
+int getNthFromLast(struct node* head, int k)
+{
+	node* first = head;
+	for(int i =1; i < k; i++)
+	{
+		first = first->next;
+	}
+	node* second = head;
+	while(first->next != nullptr)
+	{
+ 		first = first->next;
+		second = second->next;
+	}
+	return second->data;
+}
+
 //Palindrome:
 bool isPalindrome(ListNode* head) 
 {
