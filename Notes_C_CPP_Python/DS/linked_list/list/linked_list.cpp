@@ -5,6 +5,8 @@ void deleteNode(ListNode* node)
 	node->next = node->next->next;
 }
 
+//Add two numers represented by Linked list:
+
 //Get middle node of linked list
 int getMiddle(Node *head)
     {
