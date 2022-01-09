@@ -5,6 +5,22 @@ void deleteNode(ListNode* node)
 	node->next = node->next->next;
 }
 
+//Get middle node of linked list
+int getMiddle(Node *head)
+    {
+         if(head==nullptr){
+            return 0;
+        }
+        Node* slow=head;
+        Node*fast=head;
+        while(fast!=nullptr && fast->next!=nullptr){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        return slow->data;
+   
+    }
+
 //Get the nth node from the end of linked list
 int getNthFromLast(struct node* head, int k)
 {
