@@ -95,7 +95,6 @@ int main()
 }
 
 // CPP program to demonstrate use of stringstream to count frequencies of words.
-
 void printFrequency(string st)
 {
 	// each word it mapped to it's frequency
