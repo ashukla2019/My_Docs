@@ -545,3 +545,20 @@ vector<string>find_permutation(string S)
      }while(next_permutation(S.begin(),S.end()));
      return s;
 }
+
+//remove duplicates from string:
+string removeDups(string S) 
+{
+    string str="";
+for(int i=0;i<S.length();i++)
+{
+    if(str.find(S[i])==-1)
+    {
+	str=str+S[i];
+    }
+    else
+    {
+	//continue;
+    }
+}
+return str;
