@@ -532,3 +532,17 @@ string reverseWords(string S)
 rtr.pop_back();
 return rtr;
 } 
+
+//Permutations of a given string :
+Input: ABC
+Output: ABC ACB BAC BCA CAB CBA
+vector<string>find_permutation(string S)
+{
+     vector<string> s;
+     sort(S.begin(), S.end());  
+     do
+     {
+     	s.push_back(S);
+     }while(next_permutation(S.begin(),S.end()));
+     return s;
+}
