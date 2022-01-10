@@ -547,6 +547,10 @@ vector<string>find_permutation(string S)
 }
 
 //remove duplicates from string:
+Input: S = "zvvo"
+Output: "zvo"
+Explanation: Only keep the first occurrence
+
 string removeDups(string S) 
 {
     string str="";
