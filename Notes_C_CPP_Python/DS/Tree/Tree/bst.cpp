@@ -231,11 +231,31 @@ bool isValidBST(TreeNode* root, TreeNode* minNode, TreeNode* maxNode)
  		}
  	}
  }
+
+//Check if BST is symmetric
  
- bool isBinarySearchtree(Node* root)
- {
- 	
- }
+bool areSymmetric(TreeNode* lt, TreeNode* rt)
+{
+	if(lt ==nullptr || rt== nullptr)
+	{
+		return (lt == rt);
+	}
+	if(lt->val != rt->val)
+	{
+		return false;
+	}
+	return(areSymmetric(lt->left, rt->right) && areSymmetric(lt->right, rt->left));
+}
+bool isSymmetric(TreeNode* root) {
+	if(root == nullptr)
+	{
+		return true;
+	}
+	return areSymmetric(root->left, root->right);
+}
+
+//Convert Sorted Array to Binary Search Tree:
+
 
 int main() 
 {
