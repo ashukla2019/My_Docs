@@ -17,6 +17,16 @@ vector::erase(): It is used for removing a range of elements from the specified 
 vector::clear(): It removes all the vector elements.
 */
 
+//How vector works internally:
+/*
+When std::vector’s internal memory completely finishes then it increases the size of its memory. To do that it performs following steps,
+
+1.) It will allocate a bigger chunk of memory on heap i.e. almost double the size of previously allocated.
+2.) Then it copies all the elements from old memory location to new one. Yes it copies them, so in case our elements are user defined objects then their copy constructor will be called. Which makes this step quite heavy in terms of speed.
+3.) Then after successful copying it deletes the old memory.
+
+*/
+
 #include<iostream>
 #include <vector>
 #include <string>
@@ -80,6 +90,7 @@ int main()
 	//Erase elements by position and position range
 	//vec.erase(vec.begin()+1); by position
 	//vec.erase(vec.begin(), vec.begin()+2); by position range	
+	
 	//Remove all occurrences of an element from vector in O(n) complexity:
 	//int elem = 20;
 	//vec.erase(std::remove(vec.begin(), vec.end(), elem), vec.end());

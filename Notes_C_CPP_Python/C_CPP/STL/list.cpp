@@ -65,5 +65,10 @@ int main()
 	
 	//lt.erase(lt.begin(), lt.begin()); //by position range	
 	
+	//C++ : How to get element by index in List: list doesn’t have operator []
+	// Find 3rd element from list
+    // It returns a new iterator pointing to n position after the
+    // base iterator given as first argument
+    auto it1 = std::next(listOfStrs.begin(), 2);
 	return 0;
 }
