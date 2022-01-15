@@ -360,3 +360,28 @@ vector<int> twoSum(vector<int>& nums, int target)
 	}
 	return {};
 }
+
+//Armstrong number	
+  int getOrder(int n)
+    {
+        int count = 0;
+        while(n)
+        {
+            count++;
+            n = n/10;
+        }
+        return count;
+    }
+    string armstrongNumber(int n){
+        int num = n;
+        int order = getOrder(num);
+        int sum =0;
+        while(num)
+        {
+            int digit = num%10;
+            sum = sum + pow(digit, order);
+            num = num/10;
+        }
+        return(sum == n ? "Yes": "No");
+     
+    }	
