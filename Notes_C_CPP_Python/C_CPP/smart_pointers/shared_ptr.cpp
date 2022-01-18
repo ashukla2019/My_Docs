@@ -4,6 +4,9 @@ using namespace std;
 
 // A Sample class with prints in constructor and destructor, so that we can track when the memory
 // is allocated and deallocated
+//points:
+//shared pointers do release memory without explicitly calling the delete.
+//shared pointers does use reference counts and use it smartly
 
 class Sample {
 public:
@@ -12,7 +15,7 @@ public:
 	void publicFn() { cout << "This is public function of class" << endl; }
 };
 
-// Test to confirm that shared pointers do release memory without explicitely calling
+// Test to confirm that shared pointers do release memory without explicitly calling
 // the delete
 void  TestSharedPtr_ReleaseMemory() {
 	shared_ptr<Sample> sp(new Sample{});
@@ -32,6 +35,7 @@ shared_ptr<Sample> AFunc() {
 void TestSharedPtr_ReferenceCount() {
 	cout << "Enter TestSharedPtr_ReferenceCount" << endl;
 	shared_ptr<Sample> retSp = AFunc();
+	cout<<"ref:count"<<retSp.use_count()<<endl;
 	cout << "Exit TestSharedPtr_ReferenceCount" << endl;
 	return;
 }
@@ -54,8 +58,8 @@ int main() {
 	cout << "------------------------------------------------" << endl;
 	TestSharedPtr_ReferenceCount();
 	cout << "------------------------------------------------" << endl;
-	TestSharedPtr_ReferenceCount_Assignments();
+	//TestSharedPtr_ReferenceCount_Assignments();
 	cout << "------------------------------------------------" << endl;
-	TestSharedPtr_MakeShared();
+	//TestSharedPtr_MakeShared();
 	return 0;
 }
