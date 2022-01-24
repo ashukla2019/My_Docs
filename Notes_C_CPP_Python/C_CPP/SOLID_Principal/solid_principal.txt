@@ -16,93 +16,143 @@ High coupling would make it difficult to change and maintain your code.
 
 Single responsibility principle: 
 High cohesion: Responsibility over single purpose.
-One class should take single responsibility. For example, developing a game. Class myGame will have config settings and set player position/update player position should be done by other class.
+One class should take single responsibility. 
 
-Open/Closed principals: Open for extension but closed for modification.
-Abstract interfcaes:
-problematic code:
-enum class SensorModel {
-   Good,
-   Better
+Advantages of SRP:
+Maintainability
+Testability
+Loose coupling
+
+//User's login and registration and log an error and send mail for successful login.
+class processFile
+{
+public:
+	void downloadFile(string location);
+	void parseFile(File file);
+	void persistData(Data data);
 };
 
-struct DistanceSensor {
-   DistanceSensor(SensorModel model) : mModel{model} {}
-   int getDistance() {
-       switch (mModel) {
-           case SensorModel::Good :
-               // Business logic for "Good" model
-           case SensorModel::Better :
-               // Business logic for "Better" model
+
+--------------------------------------------------------------------------------------------
+
+Open/Closed principals: Open for extension but closed for modification.
+Classes/functions must be opened for extension but closed for modification.
+Abstract interfaces:
+problematic code:
+enum pizza 
+{
+   Dominos,
+   Mozo              //If we add more vendors... will modify code getOrder
+};
+
+class Pizza 
+{
+public:
+	getOrder(string pizza_type)
+   {
+       switch (pizza_type) 
+	   {
+           case Domino's :
+               preparePizza();
+           case Mozo :
+               preparePizza();
        }
    }
 };
----> we cannot extend functionality suppose want to add new Sensore Model. It required code changes in DistanceSensor class.
-struct DistanceSensor {
-   virtual ~DistanceSensor() = default;
-   virtual int getDistance() = 0;
+
+solution:
+class Pizza 
+{
+public:
+	preparePizza() = 0;
 };
 
-struct GoodDistanceSensor : public DistanceSensor {
-   int getDistance() override {
-       // Business logic for "Good" model
-   }
+class mozo: Pizza
+{
+public:
+	preparePizza()
+	{
+	}
 };
 
-struct BetterDistanceSensor : public DistanceSensor {
-   int getDistance() override {
-       // Business logic for "Better" model
-   }
+class mozo: Dominos
+{
+public:
+	preparePizza()
+	{
+	}
 };
-Liskov substitutional principal:
- A subclass should satisfy behavoural expectioans of parant class.
+---------------------------------------------------------------------------------------
+Liskov substitution principal:
+ A subclass should satisfy behavioral expectations of parent class.
 
-Interface segregration:
+-----------------------------------------------------------------------------------------------
+Interface segregation:
 No client should be forced to depend on methods it does not use. ISP splits interfaces that are very large into smaller and more specific ones so that clients will only have to know about the methods that are of interest to them.
-/* -------------------------------- Interfaces ----------------------------- */
-struct IPrinter 
-{
-    virtual void print(Document &doc) = 0;
-};
-struct IScanner 
-{
-    virtual void scan(Document &doc) = 0;
-};
-/* ------------------------------------------------------------------------ */
-struct Printer : IPrinter 
-{
-	void print(Document &doc) override;
-};
-struct Scanner : IScanner 
-{
-    void scan(Document &doc) override;
-};
-Dependency inversion principal:
-low coupling. High level module should not depend on low level module. Both should depend on abstract interfaces.
 
-Problematic code:
-struct AwsCloud {
-   void uploadToS3Bucket(string filepath) { /* ... */ }
+problem:
+class printer //Abstract class
+{
+	void print()=0;
+	void scan() =0;
+	void fax()=0;        //this is not usable for client myprinter
+	
 };
 
-struct FileUploader {
-   FileUploader(AwsCloud& awsCloud);
-   void scheduleUpload(string filepath);
+class myprinter: public printer
+{
+	
 };
-
-here Fileuploader depends on AwsCloud  but will be difficult if some want to use other cloud option then it requires to change the high lelvel class implemenatation.
 
 Solution:
-struct Cloud {
-   virtual ~Cloud() = default;
-   virtual void upload(string filepath) = 0;
+We should have two abstract classes:
+class printer //Abstract class
+{
+	void print()=0;
+	void scan() =0;
+	
 };
 
-struct AwsCloud : public Cloud {
-   void upload(string filepath) override { /* ... */ }
+class Fax //Abstract class
+{
+	void fax()=0;       
+	
+};
+-----------------------------------------------------------------------------------------------
+Dependency inversion principal:
+low coupling. High level module should not depend on low level module. 
+Both should depend on abstract interfaces/classes not on the concrete classes.
+
+Problematic code:
+class mycloud
+{
+public:
+	void upload(string filepath);
 };
 
-struct FileUploader {
-   FileUploader(Cloud& cloud);
-   void scheduleUpload(string filepath);
+class fileUploader
+{
+public:
+		fileUploader(mycloud& mcl); //it depends on myCloud which is wrong...should depend on abstraction.
+};
+
+//Correction:
+class cloud
+{
+public:
+	void upload(string filepath)=0;
+};
+
+class mycloud:public cloud
+{
+public:
+	void upload()
+	{
+		cout<<""<<endl;
+	}
+};
+class fileUploader
+{
+public:
+		fileUploader(cloud& cl); //it depends on myCloud which is wrong...should depend on abstraction.
 };
