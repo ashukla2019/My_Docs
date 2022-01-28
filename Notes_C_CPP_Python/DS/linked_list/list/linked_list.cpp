@@ -216,3 +216,60 @@ void removeLoop(struct Node* loop_node, struct Node* head)
       to fix the loop */
     ptr2->next = NULL;
 }
+
+//Flattening the linkedlist:
+5 -> 10 -> 19 -> 28
+|     |     |     | 
+7     20    22   35
+|           |     | 
+8          50    40
+|                 | 
+30               45
+Output:  5-> 7-> 8- > 10 -> 19-> 20->
+22-> 28-> 30-> 35-> 40-> 45-> 50.
+
+Node* merge(Node* a, Node* b)
+{    
+    // If first linked list is empty 
+    // then second is the answer
+    if (a == NULL)
+        return b;
+  
+    // If second linked list is empty 
+    // then first is the result
+    if (b == NULL)
+        return a;
+  
+    // Compare the data members of the 
+    // two linked lists and put the larger 
+    // one in the result
+    Node* result;
+  
+    if (a->data < b->data) 
+    {
+        result = a;
+        result->bottom = merge(a->bottom, b);
+    }
+  
+    else 
+    {
+        result = b;
+        result->bottom = merge(a, b->bottom);
+    }
+    result->next = NULL;
+    return result;
+}
+  
+Node* flatten(Node* root)
+{    
+    // Base Cases
+    if (root == NULL || root->next == NULL)
+    {
+        return root;
+    }
+    else
+    {
+        return merge(root, flatten(root->next));
+    }
+}
+
