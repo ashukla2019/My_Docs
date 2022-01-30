@@ -29,10 +29,7 @@ public:
 		top = top->next;
 		return temp->data;
 	}
-	int Stack :: top()
-	{
-		return top->data;
-	}
+	
 	void print()
 	{
 		Node* temp = top;
