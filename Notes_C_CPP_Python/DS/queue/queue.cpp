@@ -52,14 +52,16 @@ class queue
 		}
 	  }
 	  
+	  //Function to reverse queue data
 	  void reverse()
 	  {
-		  int i,j,t;
-		  for(i=f,j=r;i<j;i++,j--){
-		  t = q[i];
-		  q[i] = q[j];
-		  q[j] = t;
-	}
+		int i,j,t;
+		for(i=front,j=rear;i<j;i++,j--)
+		{
+			t = items[i];
+			items[i] = items[j];
+			items[j] = t;
+		}
 	  }
 };
 
