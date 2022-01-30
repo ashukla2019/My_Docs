@@ -20,7 +20,7 @@ class queue
 		}
 		else
 		{
-		    if (front == -1)
+		    if (front == -1) //if going to add first node, should set front = 0
 			{
 				front = 0;
 			}
