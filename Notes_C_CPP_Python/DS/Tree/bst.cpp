@@ -5,18 +5,21 @@ class Node
 {
 	public:
 	int data;
-	struct Node *left;
-	struct Node *right;
+	Node *left;
+	Node *right;
 };
 //Function to find minimum in a tree. 
 Node* FindMin(Node* root)
 {
-	while(root->left != NULL) root = root->left;
+	while(root->left != NULL) 
+	{
+		root = root->left;
+	}
 	return root;
 }
 
 // Function to search a delete a value from tree.
-struct Node* Delete(struct Node *root, int data) 
+Node* Delete(Node *root, int data) 
 {
 	if(root == NULL)
 	{		
@@ -185,23 +188,17 @@ int treeHeight(Node* root)
 }
 
 //check if tree is bst
-
-bool isValidBST(TreeNode* root) 
+bool isValidBST(Node* root, long min = LONG_MIN, long max = LONG_MAX) 
 {
-	return isValidBST(root, nullptr, nullptr);
-}
-
-bool isValidBST(TreeNode* root, TreeNode* minNode, TreeNode* maxNode) 
-{
-	if(root = nullptr)
+    if (root == NULL) 
 	{
 		return true;
 	}
-	if(minNode && root->val <= minNode->val || maxNode && root->val >= maxNode->val)
-	{
+    if (root->val <= min || root->val >= max)
+	{		
 		return false;
 	}
-	return isValidBST(root->left, minNode, root) && isValidBST(root->right, root, maxNode);
+    return isValidBST(root->left, min, root->val) && isValidBST(root->right, root->val, max);
 }
     
 //Level order traversal
@@ -233,46 +230,40 @@ void bfs(Node* root)
 }
 
 //Check if BST is symmetric
- 
-bool areSymmetric(TreeNode* lt, TreeNode* rt)
-{
-	if(lt ==nullptr || rt== nullptr)
-	{
-		return (lt == rt);
-	}
-	if(lt->val != rt->val)
-	{
-		return false;
-	}
-	return(areSymmetric(lt->left, rt->right) && areSymmetric(lt->right, rt->left));
-}
-bool isSymmetric(TreeNode* root) 
-{
-	if(root == nullptr)
-	{
-		return true;
-	}
-	return areSymmetric(root->left, root->right);
-}
+bool solve(Node * r1, Node * r2)
+    {    
+        if(r1 == NULL && r2 == NULL)
+            return true; 
+		
+        else if(r1 == NULL || r2 == NULL || r1->val != r2->val)
+            return false; 
+        
+        return solve(r1->left, r2->right) && solve(r1->right, r2->left);
+    }
+    
+    bool isSymmetric(Node* root) 
+    {
+        return solve(root->left, root->right);     
+    }
 
 //Convert Sorted Array to Binary Search Tree:
-TreeNode* sortedArrayToBST(vector<int>& nums)
+Node* sortedArrayToBST(vector<int>& nums)
 {
 
-	return dfs(nums, 0, nums.size()-1);
+	return createBST(nums, 0, nums.size()-1); // (array, min, max)
 
 }
 
-TreeNode* dfs(vector<int>& nums, int start, int end)
+Node* createBST(vector<int>& nums, int start, int end)
 {
 	if(start > end)
 	{
 		return nullptr;
 	}
 	int mid = (start + end)/2;
-	TreeNode* node = new TreeNode(nums[mid]);
-	node->left = dfs(nums, start, mid-1);
-	node->right = dfs(nums, mid+1, end);
+	Node* node = new Node(nums[mid]);
+	node->left = createBST(nums, start, mid-1);
+	node->right = createBST(nums, mid+1, end);
 	return node;
 }
 
@@ -329,7 +320,7 @@ int main()
 	root = Insert(root,3); root = Insert(root,4); 
 	root = Insert(root,1); root = Insert(root,11);
 	//level order traversal
-	bfs(root);
+	//bfs(root);
 	// Deleting node with value 5, change this value to test other cases
 	//root = Delete(root,5);
 	
@@ -361,5 +352,3 @@ int main()
 	Postorder(root);
 	cout<<"\n";
 }
-
-
