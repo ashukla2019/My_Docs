@@ -45,7 +45,7 @@ int main()
 		cout << tokens[i] << '\n';
 }
 
-//Tokenizing a string using stringstream Using strtok():
+//Tokenizing a string using strtok():
 int main()
 {
 	char str[] = "Geeks-for-Geeks";
@@ -259,20 +259,6 @@ char* mystrcpy(char* dest, const char* src)
 	dest[i] = '\0';
 	return dest;
 }
-char *reverseString(char *str)
-{
-	char temp;
-	int len = findstrlen(str);
-	ptr = (char*)malloc(sizeof(char)*len);
-	for(int i=0; i< len/2 ; i++)
-	{
-		temp = str[i];
-		str[i] = str[len-1-i];
-		str[len-1-i] = temp;
-	}
-	printf("reverse string is %s\n", str);
-	return str;
-}
 
 /*
 //Parse string and return if string contains int/float/alphanumeric
@@ -398,7 +384,7 @@ If it does not exist, return -1.
 */
 //Input: s = "leetcode"
 //Output: 0
-int firstUniqChar(string s) 
+int firstUniqueChar(string s) 
 {
    int count[26] = {0};
    
@@ -546,7 +532,7 @@ vector<string>find_permutation(string S)
      return s;
 }
 
-//remove duplicates from string:
+//Remove duplicates from string:
 Input: S = "zvvo"
 Output: "zvo"
 Explanation: Only keep the first occurrence
@@ -587,7 +573,7 @@ for(int i=0; i<s.length(); i++)
 return str;
 
 }	
-//ATOI:
+//Convert string to int:
 int myAtoi(string s) 
 {
 int res =0;
@@ -601,7 +587,18 @@ if(s[0] == '-')
 }
 for(; s[i] != '\0'; ++i)
 {
-    res = res*10 + s[i] - '0';
+    res = res*10 + s[i] - '0'; // s[i] - '0' -> convert character into num
 }
 return (sign*res);
 }
+
+int main()
+{
+    char str[] = "-123";
+ 
+    // Function call
+    int val = myAtoi(str);
+    cout << val;
+    return 0;
+}
+ 
