@@ -31,28 +31,20 @@ void removeDuplicates(int arr[], int n)
 }
 
 // Function to remove duplicate elements from unsorted array
-// Function to remove duplicate elements
-void remDup(int arr[], int n)
+vector<int> removeDuplicate(int A[], int N) 
 {
-
-	// Initialise a vector to store the array values
-	vector<int> v(arr, arr + n);
-	// sorting vector
-	sort(v.begin(), v.end());
-
-	// using unique() method to remove duplicates
-	auto it = unique(v.begin(), v.end());
-
-	// resize the new vector
-	v.resize(distance(v.begin(), it));
-
-	// Print the array with duplicates removed
-	cout << "\nAfter removing duplicates:\n";
-	for (it = v.begin(); it != v.end(); ++it)
-		cout << *it << " ";
-	cout << '\n';
+    vector<int>v;
+    unordered_set<int>s;
+    for(int i=0;i<N;i++)
+    {
+		if(s.find(A[i])==s.end())
+        {
+			s.insert(A[i]);
+            v.push_back(A[i]);
+        }
+    }
+    return v;
 }
-
   
 // Function to get the missing number
 int getMissingNo(int a[], int n)
