@@ -169,7 +169,7 @@ int findMaximum(Node* root)
 	{
 		return root->data;
 	}
-	return findMinimum(root->right);
+	return findMaximum(root->right);
 }
 
 int treeHeight(Node* root)
