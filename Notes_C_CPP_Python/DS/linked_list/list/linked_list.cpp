@@ -127,30 +127,6 @@ ListNode* mergeTwoLists(ListNode* list1, ListNode* list2)
 	return(result); 
 }
 
-//Detect cycle/loop in linkedlist:
-int detectAndRemoveLoop(struct Node* list)
-{
-    struct Node *slow_p = list, *fast_p = list;
-
-    // Iterate and find if loop exists or not
-    while (slow_p && fast_p && fast_p->next) {
-        slow_p = slow_p->next;
-        fast_p = fast_p->next->next;
-
-        /* If slow_p and fast_p meet at some point then there
-           is a loop */
-        if (slow_p == fast_p) {
-            removeLoop(slow_p, list);
-
-            /* Return 1 to indicate that loop is found */
-            return 1;
-        }
-    }
-
-    /* Return 0 to indicate that there is no loop*/
-    return 0;
-}
-
 /* Function to detect and remove loop in linkedlist
  /* This function detects and removes loop in the list
   If loop was there in the list then it returns 1,
@@ -267,9 +243,8 @@ Node* flatten(Node* root)
     {
         return root;
     }
-    else
-    {
-        return merge(root, flatten(root->next));
-    }
+    root->next = flatten(root->next);
+    root = merge(root, root->next);
+	return root;
 }
 
