@@ -1,3 +1,12 @@
+/*
+The input parameter is an array of two file descriptors fd[0] and fd[1]. A file descriptor is
+in fact an integer value. The system call returns a –1 in case of a failure. If the call is
+successful, it will return two integer values which are file descriptors fd[0]&fd[1]. In
+half-duplex pipes, fd[0] and fd[1] are used for reading and writing, respectively.
+Unnamed pipes are used b/w related process(like child and parent)
+*/
+
+
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
