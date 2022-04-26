@@ -4,7 +4,7 @@ using namespace std;
 class Area
 {
 protected:
-	int l,b; //private data members cann ot be accessed by Derived class
+	int l,b; //private data members can not be accessed by Derived class
 public:
 	Area(int l, int b):l(l),b(b)
 	{

@@ -2,12 +2,14 @@
 #include <memory>
 using namespace std;
 
+//only one pointer can point to one memory location.
+
 // A Sample class with prints in constructor and destructor, so that we can track when the memory
 // is allocated and deallocated:
 
 //points:
-//unique pointers do release memory without explicitly calling the delete.
-//unique pointers doesn't transfer the ownership without move.
+//unique pointers release memory without explicitly calling the delete.
+//unique pointers don't transfer the ownership without move.
 //unique pointers can be returned from a function without sharing the ownership.
 //unique pointers does free up the memory if no one is willing to take the ownership(no return from function).
 

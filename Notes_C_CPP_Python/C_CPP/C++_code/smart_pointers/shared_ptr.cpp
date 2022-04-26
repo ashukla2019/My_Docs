@@ -56,9 +56,9 @@ void TestSharedPtr_MakeShared() {
 int main() {
 	TestSharedPtr_ReleaseMemory();
 	cout << "------------------------------------------------" << endl;
-	TestSharedPtr_ReferenceCount();
+	//TestSharedPtr_ReferenceCount();
 	cout << "------------------------------------------------" << endl;
-	//TestSharedPtr_ReferenceCount_Assignments();
+	TestSharedPtr_ReferenceCount_Assignments();
 	cout << "------------------------------------------------" << endl;
 	//TestSharedPtr_MakeShared();
 	return 0;
