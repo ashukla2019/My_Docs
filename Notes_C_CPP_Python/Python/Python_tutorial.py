@@ -137,7 +137,7 @@ val = input("Enter your value: ")
 print(val)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------
-                                                                       #Printing output to console
+                              #Printing output to console
 # One object is passed 
 print("GeeksForGeeks") 
    
@@ -153,7 +153,7 @@ print("x =", x)
 #print("GeeksforGeeks")  Python@GeeksforGeeks
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------
-								      #Python Data Types
+								#Python Data Types
 # Numeric(Integer, Float) --> In Python, numeric data type represent the data which has numeric value. Numeric value can be interger, 
 # floating number or even complex numbers. These values are defined as int, float and complex.
 print("Type of a: ", type(5)) 
