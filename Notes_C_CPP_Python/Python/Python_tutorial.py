@@ -13,7 +13,7 @@ Python was mainly developed for emphasis on code readability, and its syntax all
 This would be a multiline comment in Python that...
 """
 #-----------------------------------------------------------------------------------------------------------------------------------------------
-                                                            #Variables:
+                                  #Variables:
 #We do not need to declare variables before using them or declare their type. A variable is created the moment we first assign a value to it.
 
 # An integer assignment 
@@ -30,7 +30,7 @@ print(salary)
 print(name) 
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------
-                                                              # Operators:
+                                 # Operators:
 #Arithmetic operators: Arithmetic operators are used to perform mathematical operations like addition, subtraction, multiplication and division.
 # Examples of Arithmetic Operator 
 a = 9
@@ -67,7 +67,6 @@ print(a >= b)
    
 # a <= b is True 
 print(a <= b)
-
 
 #Logical Operators: Logical operators perform Logical AND, Logical OR and Logical NOT operations.
 # Examples of Logical Operator 
@@ -127,9 +126,9 @@ print("G" in a1)
 print("N" not in b1)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------
-
-								      #Taking input from user
-#input(): This function first takes the input from the user and then evaluates the expression, which means Python automatically identifies whether the user entered 
+						#Taking input from user
+#input(): This function first takes the input from the user and then evaluates the expression,
+# which means Python automatically identifies whether the user entered 
 #a string or a number or list. For example:
 # Python program showing a use of input() 
    
@@ -210,7 +209,8 @@ print(String1)
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------
-#Lists in Python can be created by just placing the sequence inside the square brackets[].
+#Lists in Python can be created by just placing the sequence inside 
+#the square brackets[].
 #Unlike Sets, list does not need a built-in function for creation of list.
 #Note  Unlike Sets, list may contain mutable elements.
   
@@ -251,8 +251,9 @@ Multi-Dimensional List:
 '''
 
 #Creating a list with multiple distinct or duplicate elements
-#A list may contain duplicate values with their distinct positions and hence, multiple
-#distinct or duplicate values can be passed as a sequence at the time of list creation.
+#A list may contain duplicate values with their distinct positions and hence, 
+#multiple distinct or duplicate values can be passed as a sequence at the time 
+#of list creation.
 
 # Creating a List with 
 # the use of Numbers
@@ -609,7 +610,8 @@ Printing List in reverse:
 ['S', 'K', 'E', 'E', 'G', 'R', 'O', 'F', 'S', 'K', 'E', 'E', 'G']
 '''
 #-------------------------------------------------------------------------------------
-#Tuple is a collection of Python objects much like a list. The sequence of values stored in a tuple can be of any type, and they are indexed by integers. 
+#Tuple is a collection of Python objects much like a list. The sequence of values
+# stored in a tuple can be of any type, and they are indexed by integers. 
 #Values of a tuple are syntactically separated by commas. Although it is not necessary, it is more common to define a tuple by closing the sequence of values in parentheses. This helps in understanding the Python tuples more easily.
 #Creating a Tuple
 #In Python, tuples are created by placing a sequence of values separated by comma with or without the use of parentheses for grouping the data sequence.
@@ -835,7 +837,8 @@ True
 #-----------------------------------------------------------------------------------------------------------------------------------------------
 
 # Set
-# In Python, Set is an unordered collection of data type that is iterable, mutable and has no duplicate elements. The order of elements in a set is undefined though it may consist of various elements. Sets can be created by using the built-in set() function with an iterable object or a sequence by placing the sequence inside curly braces {}, separated by comma.
+# In Python, Set is an unordered collection of data type that is iterable, mutable and has no duplicate elements. 
+#The order of elements in a set is undefined though it may consist of various elements. Sets can be created by using the built-in set() function with an iterable object or a sequence by placing the sequence inside curly braces {}, separated by comma.
 # Python program to demonstrate Creation of Set in Python  
      
 # Creating a Set  
@@ -1014,6 +1017,10 @@ Output:
 {'A': {1: 'Geeks', 2: 'For', 3: 'Geeks'}, 6: 'To', 7: 'Geeks'}
 {6: 'To', 7: 'Geeks'}
 '''
+#--------------------------------------------------------------------------------
+#List: mutable, ordered and that's why slicing possible
+#Tuple: Immutable, ordered and that's why slicing possible 
+#set: mutable, unordered and slicing not possible.
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1356,11 +1363,14 @@ I'm a dog
 #-----------------------------------------------------------------------------------------------------------------------------------------------
 
 # The self
-# self represents the instance of the class. By using the self keyword we can access the attributes and methods of the class in python. It binds the attributes with the given arguments.
+# self represents the instance of the class. By using the self keyword 
+# we can access the attributes and methods of the class in python. It binds the attributes with the given arguments.
 # Note: For more information, refer self in Python class.
 # Constructors and Destructor
 
-# Constructors: Constructors are generally used for instantiating an object.The task of constructors is to initialize(assign values) to the data members of the class when an object of class is created. In Python the __init__() method is called the constructor and is always called when an object is created. There can be two types of constructors:
+# Constructors: Constructors are generally used for instantiating an object.
+# The task of constructors is to initialize(assign values) to the data members of 
+# the class when an object of class is created. In Python the __init__() method is called the constructor and is always called when an object is created. There can be two types of constructors:
 # Default constructor: The constructor which is called implicilty and do not accept any argument.
 # Parameterized constructor:Constructor which is called explicitly with parameters is known as parameterized constructor.
 
