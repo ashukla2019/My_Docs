@@ -1,4 +1,63 @@
-//Language usability Enhancements:
+/*
+***************Rule of Zero: 
+
+
+***************Rule of three:
+The rule of three is also known as the Law of Big Three or The Big Three and 
+prescribes for class that, if a class defines any of the mentioned three then 
+it should probably explicitly define all three:
+
+destructor
+copy constructor
+copy assignment constructor
+These three are special member functions of class. If none of them is explicitly
+defined by the programmer, then the compiler provides implicit versions. 
+If any one of the above is explicitly defined that means implicit versions for
+the other two must be improper and must be redefined.
+
+This happens because implicitly generated constructors and assignment operators’ 
+shallow copy the data members. We require deep copy when class contains pointers 
+pointing to dynamically allocated resources.
+
+The default destructors remove the unused objects. When there is no copy 
+constructor defined then the destructor will run twice, once for objects that
+contain the copy and second for objects from which the data members are copied. 
+To avoid this, explicit definition becomes necessary.
+
+**************Rule of Five:
+Rule of five is an extension of the rule of three due to the introduction of 
+move semantics in C++11. The rule of five is also applied in C++ for resource 
+management. This rule potentially eliminates memory leaks and other problems 
+in C++ code. The Rule of The Big Five states that if you have to write one of 
+the following functions then you have to have a policy for all of them. 
+If we have an Object Foo then we can have a FooManager that handles the 
+resource Foo. When implementing FooManager, you'll likely all need the
+following functions to be implemented:
+
+Destructor: When this manager goes out of scope it should free all the resources 
+it was managing.
+
+Assignment operator:If you do not provide one the compiler creates a default 
+assignment operator. The default assignment operation is a member-wise copy 
+function and does a shallow copy and not a deep copy. This could cause problems
+like memory leaks, wrong assignment.
+
+Copy constructor:The compiler-supplied copy constructor does a member-wise copy 
+of all the FooManagers attributes. This poses the same problems as the assignment
+operator.
+
+Move constructor:Copying objects can be expensive as it involves creating, 
+copying and then destroying temporary objects. C++11 introduced the concept
+of the r-value reference. An r-value reference can be explicitly bound to 
+an r-value. An r-value is an unnamed object. A temporary object, in other words.
+This r-value reference can be used in a constructor to create a reference to 
+the r-value passed to it.
+
+Move assignment operator:It is useful to only have one resource at a time. 
+This resource's ownership can be transferred from one manager to another.
+In such cases, you can provide a move assignment operator.
+*/
+
 1)Auto: Automatic Type Deduction
 	//Before C++11, the auto keyword was used for storage class.
 	//auto is now a sort of placeholder for a type, telling the compiler it has to deduce the actual type 
@@ -29,10 +88,33 @@
 	auto D = { 5, 6.7 }; // C3535: cannot deduce type for 'auto' from initializer list'
 	
 2)Nullptr:To avoid mistakes which might occur when a null pointer gets interpreted as an integral value. 
-	C++ does not allow to implicitly convert void * to other types. 
+	void fun(char* s)
+	{
+		cout<<"inside fun(char*)"<<endl;
+	}
+	void fun(int x)
+	{
+		cout<<"inside fun(int)"<<endl;
+	}
+	int main()
+	{
+		fun(NULL); //There will be an error to find matching function, since NULL is macro. 
+		           //C++ introduced nullptr to avoid confusion.
+	}
 	
-3)initializer list: 
-	// vector<int> vec = {10,20,20}; //calling initializer list constructor. 
+3)initializer list: assignment operator is overhead: first resolve right hand side then
+//allocate memory. So need uniform way of initialization
+
+//uniform initialization search order:
+	//initializer_list constructor: myclass(const initializer_list<int>&v){}
+		//all stl container supports initializer list constructor.
+	//regular constructor that takes appropriate parameters myclass(int x, int y, int z): follows member by member copy
+	//Aggregate initializer => myclass m ={1, 2, 3}; it does byte by byte copy
+	
+	//Test code: 
+	
+	
+	// vector<int> vec{10,20,20}; //calling initializer list constructor. 
 	//Need not to store data using vec.push_back().
 	//we can create our own initializer list constructor
 	class myclass
@@ -50,7 +132,7 @@
 	};
 	int main()
 	{
-		myclass v = {1,2,3,4};
+		myclass v {1,2,3,4};
 	}
 	Use of initializer list: It is used when:
 	1)	To initialize reference variable
@@ -154,8 +236,6 @@
 		return 0; 
 	} 
 
-	
-
 6)Deleted and Defaulted Functions: The default part instructs the compiler to generate the default implementation for
   the function. Defaulted functions have two advantages: 
   They are more efficient than manual implementations, and they rid the programmer from the chore 
@@ -240,7 +320,7 @@
 		return 0;
 	}
 
-
+//Reference collapsing:
 
 
 
