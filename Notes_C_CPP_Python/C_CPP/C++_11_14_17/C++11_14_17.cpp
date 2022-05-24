@@ -58,13 +58,32 @@ This resource's ownership can be transferred from one manager to another.
 In such cases, you can provide a move assignment operator.
 */
 
-1)Auto: Automatic Type Deduction
+//1) Type Inference(auto and decltype):
+//Typeid is an operator which is used where the dynamic type of an object needs
+//to be known.
+
+/*
+decltype Keyword: It inspects the declared type of an entity or the type of an
+expression. ‘auto’ lets you declare a variable with a particular type whereas
+decltype lets you extract the type from the variable so decltype is sort of an
+operator that evaluates the type of passed expression.
+
+decltype(fun1()) x; //// Data type of x is same as return type of fun1() 
+*/
+
+Auto: Automatic Type Deduction: It infer the type.
 	//Before C++11, the auto keyword was used for storage class.
 	//auto is now a sort of placeholder for a type, telling the compiler it has to deduce the actual type 
 	//of a variable that is being declared from its initializer. 
 	auto i = 42;        // i is an int
 	auto l = 42LL;      // l is an long long
 	auto p = new foo(); // p is a foo*
+	
+	auto i = 10+5;
+	1) compile time: to fetch the result type of expression(10+5)
+	2) run time: to evaluate the expression at run time. we can use decltype
+	which will identify at compile time.
+	decltype(
 
 	//auto can be used for iterators also.
 	vector<int>::iterator it; //old way
@@ -87,7 +106,9 @@ In such cases, you can provide a move assignment operator.
 	auto C{ 4 }; // int
 	auto D = { 5, 6.7 }; // C3535: cannot deduce type for 'auto' from initializer list'
 	
-2)Nullptr:To avoid mistakes which might occur when a null pointer gets interpreted as an integral value. 
+	//Don't use auto: when type conversion is needed...
+	
+//2)Nullptr:To avoid mistakes which might occur when a null pointer gets interpreted as an integral value. 
 	void fun(char* s)
 	{
 		cout<<"inside fun(char*)"<<endl;
@@ -102,7 +123,7 @@ In such cases, you can provide a move assignment operator.
 		           //C++ introduced nullptr to avoid confusion.
 	}
 	
-3)initializer list: assignment operator is overhead: first resolve right hand side then
+//3)initializer list: assignment operator is overhead: first resolve right hand side then
 //allocate memory. So need uniform way of initialization
 
 //uniform initialization search order:
@@ -199,7 +220,7 @@ In such cases, you can provide a move assignment operator.
 	}
 	5)	To initialize base class data members if function parameter and data member are using same name.
 
-4)Range-based for loop: C++11 bring in a new kind of for loop that iterates over all elements of a given range/set of arrays or collection
+//4)Range-based for loop: C++11 bring in a new kind of for loop that iterates over all elements of a given range/set of arrays or collection
 	for (declaration : coll/array_name )
 	{
 	// statement(s) block;
@@ -216,7 +237,23 @@ In such cases, you can provide a move assignment operator.
 			std::cout<<"element"<<element<<std::endl;
 	}
 
-5)constexpr: By specifying constexpr, we suggest compiler to evaluate value at compile time. 
+//5)constexpr: By specifying constexpr, we suggest compiler to evaluate value at compile time. 
+	int gfun() { return 4;}
+
+	int main()
+	{
+		int arr[gfun()]; //error: function call must have constant value....
+		return 0;
+	}
+	solution is constexpr:
+	constexpr int gfun() { return 4;}
+
+	int main()
+	{
+		int arr[gfun()]; //error: function call must have constant value....
+		return 0;
+	}
+		
 	1)constexpr variables: The primary difference between const and constexpr variables is that the 
 	initialization of a const variable can be deferred until run time. A constexpr variable must 
 	be initialized at compile time.
@@ -235,8 +272,92 @@ In such cases, you can provide a move assignment operator.
 		cout << x; 
 		return 0; 
 	} 
+	
+//6)Functors and lambda function:
+C++11 -  functors & lambda functions
 
-6)Deleted and Defaulted Functions: The default part instructs the compiler to generate the default implementation for
+Functors: Calling object using parenthesis like function call. One advantage of functors over function pointers is that they can hold state. Since this state is held by the instance of the object it can be thread safe (unlike static variables inside functions used with function pointers). The state of a functor can be initialized at construction.
+***************************functors_example********
+#include<iostream>
+#include <vector>
+#include<algorithm>	
+using namespace std;
+
+//Implemented functor using struct multiply
+/*
+struct multiply
+{
+	private:
+	int factor;
+	public:
+	multiply(){}
+	multiply(int x):factor(x){}
+	void operator()(int y)
+	{
+		cout<<"Multiplied vector values:"<<factor*y<<endl;
+	}
+	
+};
+*/
+//Implemented functor using class multiply
+/*
+class multiply
+{
+	private:
+		int factor;
+	public:
+	multiply(){}
+	multiply(int x):factor(x){}
+	void operator()(int y)
+	{
+		cout<<"Multiplied vector values:"<<factor*y<<endl;
+	}
+	
+};
+*/
+
+int main()
+{
+	vector<int>vec = {1,2,3,4};
+	int factor = 2;
+	//for_each(vec.begin(), vec.end(), multiply(2)); //calling functor(multiply(x)--> value will be passed to constructor)
+	//using lambda function
+	for_each(vec.begin(), vec.end(), [factor](int y){ //[] will take local variable and () will take vector values
+	cout<<"Multiplied vector values:"<<factor*y<<endl;});
+	return 0;
+}
+//A 'Lambda' function: The C++ concept of a lambda function originates in the lambda calculus and functional programming. A lambda is an unnamed function that is useful (in actual programming, not theory) for short snippets of code that are impossible to reuse and are not worth naming.
+int main()
+  {
+      auto sum = [](int x, int y) { return x + y; };
+      cout << sum(5, 2) << endl;
+      cout << sum(10, 5) << endl;
+  }
+
+//C++ 14 provided generic lambda, suppose you want to have sum function for integer/float etc.
+[](auto a, auto b) { return a + b; }
+
+int main() 
+{ 
+  
+    // Declare a generalized lambda and store it in sum 
+    auto sum = [](auto a, auto b) { 
+        return a + b; 
+    }; 
+  
+    // Find sum of two integers 
+    cout << sum(1, 6) << endl; 
+  
+    // Find sum of two floating numbers 
+    cout << sum(1.0, 5.6) << endl; 
+  
+    // Find sum of two strings 
+    cout << sum(string("Geeks"), string("ForGeeks")) << endl; 
+  
+    return 0; 
+} 
+
+//7)Deleted and Defaulted Functions: The default part instructs the compiler to generate the default implementation for
   the function. Defaulted functions have two advantages: 
   They are more efficient than manual implementations, and they rid the programmer from the chore 
   of defining those functions manually.
@@ -251,9 +372,9 @@ In such cases, you can provide a move assignment operator.
   Recall that C++ automatically declares a copy constructor and an assignment operator for classes. 
   To disable copying, declare these two special member functions =delete:
 
-8) Delegating Constructors: In C++11 a constructor may call another constructor of the same class:
+//8)Delegating Constructors: In C++11 a constructor may call another constructor of the same class:
 
-9) Override and Final:
+//9)Override and Final:
 	class B 
 	{
 	public:
@@ -276,18 +397,37 @@ In such cases, you can provide a move assignment operator.
 	class B 
 	{
 	public:
-	   virtual void f(int) const {std::cout << "B::f " << std::endl;}
+	   virtual void f(int) const 
+	   {std::cout << "B::f " << std::endl;}
 	};
 
 	class D : public B
 	{
 	public:
-	   virtual void f(int) override {std::cout << "D::f" << std::endl;}
+	   virtual void f(int) override 
+	   {std::cout << "D::f" << std::endl;}
 	};
-	if you intend to make a method impossible to override any more (down the hierarchy), mark it as final. That can be in the base class, or any derived class. 
+	//if you intend to make a method impossible to override any more (down the hierarchy), 
+	//mark it as final. 
+	
+	class B 
+	{
+	public:
+	   virtual void f(int) final //Freezed member-function, can not be overridden in sub-class
+	   {std::cout << "B::f " << std::endl;}
+	};
+
+	class D : public B
+	{
+	public:
+	   virtual void f(int)  
+	   {std::cout << "D::f" << std::endl;}
+	};
+	
+	That can be in the base class, or any derived class. 
 	If it's in a derived class, you can use both the override and final specifiers.
 	
-10) Variadic template: are class or function templates, that can take any variable(zero or more) number
+//10) Variadic template: are class or function templates, that can take any variable(zero or more) number
 	of arguments. In C++, templates can have a fixed number of parameters only that have to be specified
 	at the time of declaration. However, variadic templates help to overcome this issue.
 	/* Syntax
@@ -320,9 +460,52 @@ In such cases, you can provide a move assignment operator.
 		return 0;
 	}
 
+//11) Strongly typed Enums:
+
+problems with existing enums:
+enum apple{green =0, red =1};
+enum orange{big =0, small =1};
+int main()
+{
+	apple a = green;
+	orange o = big;
+	if(a ==o) //this becomes true while both enum type is not of same type. it is compared
+	 //at compile time.
+	{
+		cout<<"true"<<endl;
+	}
+}
+//solution is: Strongly typed Enums:
+enum class apple{green =0, red =1};
+enum class orange{big =0, small =1};
+int main()
+{
+	apple a = apple::green;
+	orange o = orange::big;
+	if(typeid(a) == typeid(o))
+	{
+		cout<<"true"<<endl;
+	}
+}
+
+//12) Static_Assert:
+int main()
+{
+	int* ptr = NULL;
+	assert(ptr != NULL); //Run-time assert
+	static_assert(sizeof(int)==8, "Not 32-bit"); //compile-time assert(C++11)
+}
+
+
+
+
+
 //Reference collapsing:
 
 
+//Constexpr and static_assert:
+constexpr int add(int x, int y){return x+y;}
+static_assert(add(2,2)==4, "Not correct value")
 
 
    
