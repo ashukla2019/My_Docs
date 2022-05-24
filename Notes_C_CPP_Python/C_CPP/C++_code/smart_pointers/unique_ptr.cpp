@@ -2,6 +2,9 @@
 #include <memory>
 using namespace std;
 
+//problem with auto_ptr: Specifically, copying one auto_ptr to another does not
+// create two equal objects since one has lost its ownership of the pointer.
+
 //only one pointer can point to one memory location.
 
 // A Sample class with prints in constructor and destructor, so that we can track when the memory
