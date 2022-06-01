@@ -1,3 +1,17 @@
+/*
+//Mutual Exclusion:
+
+//Barrier: In parallel or threaded computing, a barrier is a software instruction
+that prevents execution from continuing until all threads or processes are
+synchronized.
+
+//Condition variables: If you want one thread to signal an event to other thread, it 
+requires condition variables.One thread waits until a certain condition is true.
+
+*/
+
+
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,10 +42,7 @@ void* car(void* arg)
 	{
         printf("No fuel. Waiting...\n");
         pthread_cond_wait(&condFuel, &mutexFuel);
-        // Equivalent to:
-        // pthread_mutex_unlock(&mutexFuel);
-        // wait for signal on condFuel
-        // pthread_mutex_lock(&mutexFuel);
+       
     }
     fuel -= 40;
     printf("Got fuel. Now left: %d\n", fuel);
