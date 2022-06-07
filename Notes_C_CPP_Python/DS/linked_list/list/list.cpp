@@ -4,17 +4,17 @@
 #include <cstring>
 using namespace std;
 
-class node
+class ListNode
 {
 	public:
-		int data;
-		node* next;
+		int val;
+		ListNode* next;
 };
 	
-void add_data_end(node** head, int data)
+void add_data_end(ListNode** head, int data)
 {
-	node *temp = new node();
-	temp->data = data;
+	ListNode *temp = new ListNode();
+	temp->val = data;
 	temp->next = NULL;
 	if(NULL == *head)
 	{
@@ -22,7 +22,7 @@ void add_data_end(node** head, int data)
 	}
 	else
 	{
-		node* t = *head;
+		ListNode* t = *head;
 		while(t->next != nullptr)
 		{
 			t = t->next;
@@ -31,41 +31,41 @@ void add_data_end(node** head, int data)
 	}
 }
 
-void delete_data_end(node** head)
+void delete_data_end(ListNode** head)
 {
-	node* temp, *q;
+	ListNode* temp, *q;
 	temp = *head;
-	while(temp->next !=nullptr)
+	while(temp->next->next !=nullptr)
 	{
-		q = temp;
+		//q = temp;
 		temp = temp->next;
 	}
-	q->next = NULL;
-	free(temp);
+	temp->next = NULL;
+	//free(temp);
 }
 
-void add_data_beg(node** head, int item)
+void add_data_beg(ListNode** head, int item)
 {
-	node* temp = new node();
-	temp->data = item;
+	ListNode* temp = new ListNode();
+	temp->val = item;
 	temp->next = *head;
 	*head = temp;
 }
 
-void delete_data_beg(node** head)
+void delete_data_beg(ListNode** head)
 {
-	node* temp;
+	ListNode* temp;
 	temp = *head;
 	*head = temp->next;
 	free(temp);
 	
 }
 
-void reverse_list(node** head)
+void reverse_list(ListNode** head)
 {
-	node *prev = NULL;
-	node *temp = NULL;
-	node *current = *head;
+	ListNode *prev = NULL;
+	ListNode *temp = NULL;
+	ListNode *current = *head;
 	while(current != NULL)
 	{
 		temp = current->next;
@@ -75,20 +75,20 @@ void reverse_list(node** head)
 	}
 	*head = prev;
 }
-void show_data(node* head)
+void show_data(ListNode* head)
 {
-	node *temp;
+	ListNode *temp;
 	temp = head;
 	while(temp !=NULL)
 	{
-		cout<<"data values:"<<temp->data<<endl;
+		cout<<"data values:"<<temp->val<<endl;
 		temp = temp->next;
 	}
 }
 
 int main(int argc, char* argv[])
 {
-	node* head = nullptr; 
+	ListNode* head = nullptr; 
 	add_data_end(&head,10); 
 	add_data_end(&head,20);
 	show_data(head);
@@ -110,7 +110,9 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-//Delete Node in a Linked List:
+//Delete Node in a Linked List, when head of linked list is not given.
+//approach: we can not go back, we will make current node(to be deleted) to next node 
+//and will delete next node.
 void deleteNode(ListNode* node) 
 {
 	node->val = node->next->val;
@@ -119,41 +121,45 @@ void deleteNode(ListNode* node)
 
 //Add two numbers represented by Linked list:
 
-//Get middle node of linked list
-int getMiddle(Node *head)
+//Get middle node of linked list: Time complexity o(n/2) because we traverse only half nodes => o(n)
+//tortoise and hare approach: Hare will move 2 steps and tortoise will move 1 step.
+int getMiddle(ListNode *head)
     {
          if(head==nullptr){
             return 0;
         }
-        Node* slow=head;
-        Node*fast=head;
-        while(fast!=nullptr && fast->next!=nullptr){
-            slow=slow->next;
-            fast=fast->next->next;
+        ListNode* hare=head;
+        ListNode*tortoise=head;
+        while(hare!=nullptr && hare->next!=nullptr){
+            tortoise=tortoise->next;
+            hare=hare->next->next;
         }
-        return slow->data;
+        return tortoise->val;
    
     }
 
-//Get the nth node from the end of linked list
-int getNthFromLast(struct node* head, int k)
+//Get the nth node from the end of linked list:
+//difference b/w last node and nth node will be n-1. this difference can be covered first for
+//first pointer and then difference b/w first and second will be n-1. then e can move
+//both pointer one step and once first reaches last node, will find desired node pointed by second.
+int getNthFromLast(ListNode* head, int k)
 {
-	node* first = head;
+	ListNode* first = head;
 	for(int i =1; i < k; i++)
 	{
 		first = first->next;
 	}
-	node* second = head;
+	ListNode* second = head;
 	while(first->next != nullptr)
 	{
  		first = first->next;
 		second = second->next;
 	}
-	return second->data;
+	return second->val;
 }
 
 //Rotate the linked list 
-//void rotate_list(struct node** head, int k)
+void rotate_list(ListNode** head, int k)
 {
 	if (k == 0)
         return;
@@ -161,7 +167,7 @@ int getNthFromLast(struct node* head, int k)
     // Let us understand the below
     // code for example k = 4 and
     // list = 10->20->30->40->50->60.
-    node* current = *head;
+    ListNode* current = *head;
  
     // Traverse till the end.
     while (current->next != NULL)
@@ -180,7 +186,7 @@ int getNthFromLast(struct node* head, int k)
     current->next = NULL;
 }
 
-//Palindrome:
+//Palindrome: Check palindrome of linked list of numbers.
 bool isPalindrome(ListNode* head) 
 {
 	ListNode *node = head;
@@ -240,39 +246,17 @@ ListNode* mergeTwoLists(ListNode* list1, ListNode* list2)
 }
 
 /* Function to detect and remove loop in linkedlist
- /* This function detects and removes loop in the list
+ This function detects and removes loop in the list
   If loop was there in the list then it returns 1,
   otherwise returns 0 */
-int detectAndRemoveLoop(struct Node* list)
-{
-    struct Node *slow_p = list, *fast_p = list;
-
-    // Iterate and find if loop exists or not
-    while (slow_p && fast_p && fast_p->next) {
-        slow_p = slow_p->next;
-        fast_p = fast_p->next->next;
-
-        /* If slow_p and fast_p meet at some point then there
-           is a loop */
-        if (slow_p == fast_p) {
-            removeLoop(slow_p, list);
-
-            /* Return 1 to indicate that loop is found */
-            return 1;
-        }
-    }
-
-    /* Return 0 to indicate that there is no loop*/
-    return 0;
-}
 
 /* Function to remove loop.
  loop_node --> Pointer to one of the loop nodes
  head -->  Pointer to the start node of the linked list */
-void removeLoop(struct Node* loop_node, struct Node* head)
+void removeLoop(ListNode* loop_node, ListNode* head)
 {
-    struct Node* ptr1 = loop_node;
-    struct Node* ptr2 = loop_node;
+    ListNode* ptr1 = loop_node;
+    ListNode* ptr2 = loop_node;
 
     // Count the number of nodes in loop
     unsigned int k = 1, i;
@@ -303,20 +287,44 @@ void removeLoop(struct Node* loop_node, struct Node* head)
     /* Set the next node of the loop ending node
       to fix the loop */
     ptr2->next = NULL;
+}  
+  
+int detectAndRemoveLoop(ListNode* list)
+{
+    ListNode *slow_p = list, *fast_p = list;
+
+    // Iterate and find if loop exists or not
+    while (slow_p && fast_p && fast_p->next) {
+        slow_p = slow_p->next;
+        fast_p = fast_p->next->next;
+
+        /* If slow_p and fast_p meet at some point then there
+           is a loop */
+        if (slow_p == fast_p) {
+            removeLoop(slow_p, list);
+
+            /* Return 1 to indicate that loop is found */
+            return 1;
+        }
+    }
+
+    /* Return 0 to indicate that there is no loop*/
+    return 0;
 }
 
-//Flattening the linkedlist:
+/*
+//Flattening the linked list:
 5 -> 10 -> 19 -> 28
 |     |     |     | 
 7     20    22   35
 |           |     | 
-8          50    40
+8           50   40
 |                 | 
 30               45
 Output:  5-> 7-> 8- > 10 -> 19-> 20->
 22-> 28-> 30-> 35-> 40-> 45-> 50.
-
-Node* merge(Node* a, Node* b)
+*/
+ListNode* merge(ListNode* a, ListNode* b)
 {    
     // If first linked list is empty 
     // then second is the answer
@@ -331,24 +339,24 @@ Node* merge(Node* a, Node* b)
     // Compare the data members of the 
     // two linked lists and put the larger 
     // one in the result
-    Node* result;
+    ListNode* result;
   
-    if (a->data < b->data) 
+    if (a->val < b->val) 
     {
         result = a;
-        result->bottom = merge(a->bottom, b);
+        //result->bottom = merge(a->bottom, b);
     }
   
     else 
     {
         result = b;
-        result->bottom = merge(a, b->bottom);
+        //result->bottom = merge(a, b->bottom);
     }
     result->next = NULL;
     return result;
 }
   
-Node* flatten(Node* root)
+ListNode* flatten(ListNode* root)
 {    
     // Base Cases
     if (root == NULL || root->next == NULL)
@@ -360,4 +368,16 @@ Node* flatten(Node* root)
 	return root;
 }
 
+//understand recursion used in flatten function():
+//main()
+//flatten(5)
+//5->next = flatten(10)
+//10->next = flatten(19)
+//19->next = flatten(28)
+//now since 28->next = null, recursion will stop here and root which has value 28 will be
+//returned to caller(19->next = flatten(28)) => 19->next = 28
+//will call merge(19, 28) and returned merged list will be assigned to root.
+// root(19->head) will be assigned to next caller(10->next = flatten(19) => merged list with head 19
+//merge(10,19) will be done now same way, merged returned list will be assigned to next caller
+//(5->next = 10)....
 
