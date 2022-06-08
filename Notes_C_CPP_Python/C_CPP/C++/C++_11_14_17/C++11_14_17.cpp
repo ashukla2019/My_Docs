@@ -71,7 +71,7 @@ operator that evaluates the type of passed expression.
 decltype(fun1()) x; //// Data type of x is same as return type of fun1() 
 */
 
-Auto: Automatic Type Deduction: It infer the type.
+1)Auto: Automatic Type Deduction: It infer the type.
 	//Before C++11, the auto keyword was used for storage class.
 	//auto is now a sort of placeholder for a type, telling the compiler it has to deduce the actual type 
 	//of a variable that is being declared from its initializer. 
@@ -108,7 +108,7 @@ Auto: Automatic Type Deduction: It infer the type.
 	
 	//Don't use auto: when type conversion is needed...
 	
-//2)Nullptr:To avoid mistakes which might occur when a null pointer gets interpreted as an integral value. 
+2)Nullptr:To avoid mistakes which might occur when a null pointer gets interpreted as an integral value. 
 	void fun(char* s)
 	{
 		cout<<"inside fun(char*)"<<endl;
@@ -123,14 +123,40 @@ Auto: Automatic Type Deduction: It infer the type.
 		           //C++ introduced nullptr to avoid confusion.
 	}
 	
-//3)initializer list: assignment operator is overhead: first resolve right hand side then
-//allocate memory. So need uniform way of initialization
+3)initializer list and uniform initialization: 
+  //uniform initialization: assignment operator is overhead: first resolve right hand side then
+//allocate memory. So need uniform way of initialization.
+
+	//Uniform initialization syntax:
+	std::vector<int> v { 1, 2, 3 };
+    std::map<int, std::string> m { {1, "one"}, { 2, "two" }};
+	int* arr2 = new int[3]{ 1, 2, 3 };  //dynamic allocated array.
+	int arr1[3] { 1, 2, 3 }; //array 
+	int i { 42 }; //Built-in types
+	//user defined types....
+	class foo
+        {
+          int a_;
+          double b_;
+        public:
+          foo():a_(0), b_(0) {}
+          foo(int a, double b = 0.0):a_(a), b_(b) {}
+        };
+
+        foo f1{}; 
+        foo f2{ 42, 1.2 }; 
+        foo f3{ 42 };
+         
+	
 
 //uniform initialization search order:
 	//initializer_list constructor: myclass(const initializer_list<int>&v){}
 		//all stl container supports initializer list constructor.
 	//regular constructor that takes appropriate parameters myclass(int x, int y, int z): follows member by member copy
 	//Aggregate initializer => myclass m ={1, 2, 3}; it does byte by byte copy
+	
+	//Ex: int *pi = new int[5]{1, 2, 3, 4, 5};
+	//std::vector v1{1, 2};
 	
 	//Test code: 
 	
@@ -220,7 +246,7 @@ Auto: Automatic Type Deduction: It infer the type.
 	}
 	5)	To initialize base class data members if function parameter and data member are using same name.
 
-//4)Range-based for loop: C++11 bring in a new kind of for loop that iterates over all elements of a given range/set of arrays or collection
+4)Range-based for loop: C++11 bring in a new kind of for loop that iterates over all elements of a given range/set of arrays or collection
 	for (declaration : coll/array_name )
 	{
 	// statement(s) block;
@@ -237,7 +263,7 @@ Auto: Automatic Type Deduction: It infer the type.
 			std::cout<<"element"<<element<<std::endl;
 	}
 
-//5)constexpr: By specifying constexpr, we suggest compiler to evaluate value at compile time. 
+5)constexpr: By specifying constexpr, we suggest compiler to evaluate value at compile time. 
 	int gfun() { return 4;}
 
 	int main()
@@ -273,10 +299,25 @@ Auto: Automatic Type Deduction: It infer the type.
 		return 0; 
 	} 
 	
-//6)Functors and lambda function:
-C++11 -  functors & lambda functions
+6)Functors and lambda function:
+Functors: Calling object using parenthesis like function call. 
+One advantage of functors over function pointers is that they can hold state. 
+Since this state is held by the instance of the object it can be thread safe 
+(unlike static variables inside functions used with function pointers). 
+The state of a functor can be initialized at construction.
 
-Functors: Calling object using parenthesis like function call. One advantage of functors over function pointers is that they can hold state. Since this state is held by the instance of the object it can be thread safe (unlike static variables inside functions used with function pointers). The state of a functor can be initialized at construction.
+function pointer can not have additional value/state:
+void print(int val)
+{
+    cout<<"val="<<val<<"\n";
+}
+
+int main()
+{
+    vector<int>vec{10, 20, 30, 40};
+    for_each(vec.begin(), vec.end(), print); //we can pass only parameter but not additional value.
+    return 0;
+}
 ***************************functors_example********
 #include<iostream>
 #include <vector>
@@ -284,7 +325,7 @@ Functors: Calling object using parenthesis like function call. One advantage of 
 using namespace std;
 
 //Implemented functor using struct multiply
-/*
+
 struct multiply
 {
 	private:
@@ -298,9 +339,9 @@ struct multiply
 	}
 	
 };
-*/
+
 //Implemented functor using class multiply
-/*
+
 class multiply
 {
 	private:
@@ -314,7 +355,7 @@ class multiply
 	}
 	
 };
-*/
+
 
 int main()
 {
@@ -326,7 +367,14 @@ int main()
 	cout<<"Multiplied vector values:"<<factor*y<<endl;});
 	return 0;
 }
-//A 'Lambda' function: The C++ concept of a lambda function originates in the lambda calculus and functional programming. A lambda is an unnamed function that is useful (in actual programming, not theory) for short snippets of code that are impossible to reuse and are not worth naming.
+//A 'Lambda' function: A lambda is an unnamed function that is useful (in actual programming, not theory) 
+//for short snippets of code that are impossible to reuse and are not worth naming.
+
+syntax: [ capture clause ] (parameters) -> return-type //return type is evaluated by compiler 
+		{   
+			definition of method   
+		} 
+
 int main()
   {
       auto sum = [](int x, int y) { return x + y; };
@@ -357,7 +405,72 @@ int main()
     return 0; 
 } 
 
-//7)Deleted and Defaulted Functions: The default part instructs the compiler to generate the default implementation for
+/*
+
+	  A lambda expression can have more power than an ordinary function by having 
+	  access to variables from the enclosing scope. We can capture external variables
+	  from enclosing scope by three ways : 
+      Capture by reference 
+      Capture by value 
+      Capture by both (mixed capture)
+	  Syntax used for capturing variables : 
+      [&] : capture all external variable by reference--->
+			
+			int main()
+			{
+   			   int i = 3;
+			   int j = 5;
+
+			   // The following lambda expression captures i by value and
+			   // j by reference.
+			   function<int (void)> f = [&i, &j] { return i + j; };
+
+			   // Change the values of i and j.
+			   i = 22;
+			   j = 44;
+
+			   // Call f and print its result.
+			   cout << f() << endl;
+			} O/P: 66
+		
+      [=] : capture all external variable by value--->
+			
+			int main()
+			{
+				int i = 3;
+				int j = 5;
+
+				// The following lambda expression captures all external values
+				auto f = [=] { return i + j; };
+
+				// Call f and print its result.
+				cout << f() << endl;
+}
+			
+      [a, &b] : capture a by value and b by reference--->
+				int main()
+				{
+					int i = 3;
+					int j = 5;
+
+					// The following lambda expression captures i by value and
+					// j by reference.
+					function<int (void)> f = [i, &j] { return i + j; };
+					// Change the values of i and j.
+					i = 22;
+					j = 44;
+					// Call f and print its result.
+					cout << f() << endl;
+				}
+				O/P: 47
+				
+	  A lambda with empty capture clause [ ] can access only those variable which are local to it. 
+      Capturing ways are demonstrated below :
+ 
+*/
+
+
+7)Deleted and Defaulted Functions: The default part instructs the compiler to generate the default implementation for
   the function. Defaulted functions have two advantages: 
   They are more efficient than manual implementations, and they rid the programmer from the chore 
   of defining those functions manually.
@@ -371,10 +484,28 @@ int main()
   Deleted functions are useful for preventing object copying, among the rest. 
   Recall that C++ automatically declares a copy constructor and an assignment operator for classes. 
   To disable copying, declare these two special member functions =delete:
+  class A {
+	public:
+    A(int x): m(x)
+    {
+    }
+     
+    // Delete the copy constructor
+    A(const A&) = delete;
+     
+    // Delete the copy assignment operator
+    A& operator=(const A&) = delete;
+    int m;
+};
 
-//8)Delegating Constructors: In C++11 a constructor may call another constructor of the same class:
+8)Delegating Constructors: In C++11 a constructor may call another constructor of the same class:
+	// Constructor delegation
+    A(int z) : A()
+    {
+        this->z = z; // Only update z
+    }
 
-//9)Override and Final:
+9)Override and Final:
 	class B 
 	{
 	public:
@@ -427,8 +558,8 @@ int main()
 	That can be in the base class, or any derived class. 
 	If it's in a derived class, you can use both the override and final specifiers.
 	
-//10) Variadic template: are class or function templates, that can take any variable(zero or more) number
-	of arguments. In C++, templates can have a fixed number of parameters only that have to be specified
+10) Variadic template: are class or function templates, that can take any variable(zero or more)
+	number of arguments. In C++, templates can have a fixed number of parameters only that have to be specified
 	at the time of declaration. However, variadic templates help to overcome this issue.
 	/* Syntax
 	template(typename arg, typename... args)
@@ -460,7 +591,7 @@ int main()
 		return 0;
 	}
 
-//11) Strongly typed Enums:
+11) Strongly typed Enums:
 
 problems with existing enums:
 enum apple{green =0, red =1};
@@ -488,7 +619,7 @@ int main()
 	}
 }
 
-//12) Static_Assert:
+12) Static_Assert:
 int main()
 {
 	int* ptr = NULL;
