@@ -112,18 +112,19 @@ int main()
 }
 
 //Check if number is power of 2:
-bool isPowerOfTwo (int x)
-{
-/* First x in the below expression is for the case when x is 0 */
-  return x && (!(x&(x-1)));
-}
+Ex: n = 4 => binary(00000100)
+n-1 => binary(00000011)
+n&(n1) => 00000000
+ bool isPowerOfTwo(int n) {
+      return n>0  && !(n & n - 1); //if n = 0 then need to check if n>0 as well
+    }
 
 //Swap two numbers:
 void swap(int a, int b)
 {
 	a = a ^ b;
-	b = b ^ a;
-	a = a ^ b;
+	b = b ^ a; // b = b^a^b => a
+	a = a ^ b; // a = a^b^a => b
 }
 int main()
 {
@@ -131,7 +132,30 @@ int main()
 	return 0;
 }
 
+// function to check if a number has bits in alternate pattern then all will be 1 for n and n>>1
+// pattern: we know xor of 0 and 1 will be 1, if alternate bits are
+bool bitsAreInAltOrder(unsigned int n)
+{
+    unsigned int num = n ^ (n >> 1); 
+    // to check if all bits are set in 'num'
+    return allBitsAreSet(num);
+}
 
+/*Extract ‘k’ bits from a given position in a number:
+Input : number = 171
+             k = 5 
+             p = 2
+Output : The extracted number is 21
 
+steps: 
+1) Right shift number by p-1. 
+2) Do bit wise AND of k set bits with the modified number. 
+3) We can get k set bits by doing (1 << k) – 1.
+*/
+int bitExtracted(int number, int k, int p)
+{
+    return (((1 << k) - 1) & (number >> (p - 1)));
+}
+ 
 
 
