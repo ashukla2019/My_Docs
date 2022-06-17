@@ -9,8 +9,12 @@ target: Dependencies
 endif
 
 main: main.o test.o
-	$(CC) -o $@ main.o test.o
+	$(CC) -o main main.o test.o
 	
-%.o: %.cpp
-	$(CC) $(INCLUDE) -c $<
+main.o: main.cpp
+	$(CC) $(INCLUDE) -c main.cpp
+	
+test.o: test.cpp
+	$(CC) $(INCLUDE) -c test.cpp
+		
 	
