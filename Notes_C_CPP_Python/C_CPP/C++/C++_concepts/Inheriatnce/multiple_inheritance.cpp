@@ -1,9 +1,11 @@
 #include<iostream>
 using namespace std;
 
-//Problem with multiple inheritance...if both base class has same function then which will be called(ambiguity). It can be resolved
-//by using scope(::)operator to specify the function from which class is required..
-//Incase of Diamond problem, we should use virtual keyword while inheriting Base class...
+//Problem with multiple inheritance...if both base class has same function then 
+//which will be called(ambiguity). It can be resolved by using scope(::)operator to 
+//specify the function from which class is required..
+//Incase of Diamond problem, we should use virtual keyword while inheriting
+// Base class...
 
 class A
 {
