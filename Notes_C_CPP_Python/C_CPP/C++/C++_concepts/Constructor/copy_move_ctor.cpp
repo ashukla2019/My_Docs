@@ -59,17 +59,31 @@ public:
     }
 };
 
-A fun( A a1)
+void foo( A a1)
 {
-    return a1;
+    
+}
+
+void foo_by_ref( A& a1)
+{
+    
+}
+
+A fun()
+{
+	
 }
 
 int main()
 {
     A a1(10); //calling conversion constructor//
-    A a2 = fun(a1);
     //vector <A> vec;
     //vec.push_back(A(10));
+	A a3 = fun(); //returning object by value, will call move ctor.
+	//foo_by_ref(a3); //call no constructor
+	//foo(a3); //call copy constructor
+	//foo(std::move(a3)); //call move constructor
+	//foo(fun()); //will create temporary object, so will call move ctor.
     return 0;
     
 }
