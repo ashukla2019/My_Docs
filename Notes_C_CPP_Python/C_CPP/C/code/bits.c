@@ -1,53 +1,21 @@
-//Fibonacci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 
-//Fn = Fn-1 + Fn-2
-int fib(int n)
-{
-    int a = 0, b = 1, c, i;
-    if( n == 0)
-        return a;
-    for(i = 2; i <= n; i++)
-    {
-       c = a + b;
-       a = b;
-       b = c;
-    }
-    return b;
-}
+/*******************************Bit manipulations*********************/
+
+//Get,Set and reset bits:
+
+//get a bit from a variable
+#define GETBIT(var, bit)	(((var) >> (bit-1)) & 1)
+
+//set a bit to 1
+#define SETBIT(var, bit)	var |= (1 << (bit-1))
+
+//set a bit to 0
+#define CLRBIT(var, bit)	var &= (~(1 << (bit-1)))
+
 
 //Swap two nibbles in a byte:
 int swapNibbles(int x)
 {
     return ( (x & 0x0F) << 4 | (x & 0xF0) >> 4 );
-}
-
-//Bit manipulations:
-//set a bit in the number ‘num’: 
-// First step is shift '1' by position, second step is bitwise OR with num
-void set(int & num,int pos)
-{
-	num = num |(1 << pos-1);
-}
-int main()
-{
-	int num = 4, pos = 1;
-	set(num, pos);
-	cout << (int)(num) << endl;
-	return 0;
-}
-
-//Unset/clear a bit at n’th position in the number ‘num’ : 
-//First step is shift '1' by position, and take bitwise not of it then bitwise OR with num
-void unset(int &num,int pos)
-{
-	num = num &(~(1 << pos-1));
-}
-int main()
-{
-	int num = 7;
-	int pos = 1;
-	unset(num, pos);
-	cout << num << endl;
-	return 0;
 }
 
 //Toggling a bit at nth position:
@@ -112,12 +80,13 @@ int main()
 }
 
 //Check if number is power of 2:
-Ex: n = 4 => binary(00000100)
-n-1 => binary(00000011)
-n&(n1) => 00000000
- bool isPowerOfTwo(int n) {
-      return n>0  && !(n & n - 1); //if n = 0 then need to check if n>0 as well
-    }
+//Ex: n = 4 => binary(00000100)
+//n-1 => binary(00000011)
+//n&(n1) => 00000000
+bool isPowerOfTwo(int n) 
+{
+	return n>0  && !(n & n - 1); //if n = 0 then need to check if n>0 as well
+}
 
 //Swap two numbers:
 void swap(int a, int b)
@@ -132,8 +101,8 @@ int main()
 	return 0;
 }
 
-// function to check if a number has bits in alternate pattern then all will be 1 for n and n>>1
-// pattern: we know xor of 0 and 1 will be 1, if alternate bits are
+// function to check if a number has bits in alternate pattern then all will be 1 
+//for n and n>>1. pattern: we know xor of 0 and 1 will be 1, if alternate bits are
 bool bitsAreInAltOrder(unsigned int n)
 {
     unsigned int num = n ^ (n >> 1); 
@@ -157,5 +126,13 @@ int bitExtracted(int number, int k, int p)
     return (((1 << k) - 1) & (number >> (p - 1)));
 }
  
+//Check if adjacent bits are set in the binary representation of a number:
+//The expression n & (n << 1) or n & (n >> 1) returns true if n contains any 
+//pair whose adjacent bits are 1
+// Returns true if adjacent bits are set in a binary representation of `n`
+bool check(int n) 
+{
+    return n & (n << 1);
+}
 
 
