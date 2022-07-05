@@ -36,6 +36,22 @@ class Graph
   				}
 			}
 		}
+		// dfs driver function.
+		void dfs(int vertex) 
+		{
+			// If the current vertex is already visited, just return.
+			if (visited[vertex] == true) return;
+
+			cout << vertex << " ";
+
+			// Mark the vertex as visited.
+			visited[vertex] = true;
+    
+			// For every child of the current vertex, recursively call dfs();
+			for (auto node: g[vertex]) {
+			// node -> a child of vertex;
+			dfs(node);
+		}
 };
 
 int main() 
