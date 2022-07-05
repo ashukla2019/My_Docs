@@ -135,4 +135,15 @@ bool check(int n)
     return n & (n << 1);
 }
 
-
+/*Reverse Bit:
+Reverse bits of a given 32 bits unsigned integer*/
+uint32_t reverseBits(uint32_t n) 
+{
+	int res =0;
+	for(int i=31; i>=0; i--)
+	{
+		res |= (n&1)<<i;
+		n >>= 1;
+	}
+	return res;
+}
