@@ -9,7 +9,7 @@ class A
 	int x;
 	public: 
 		A(int x):x(x){}
-		friend void fun();
+		friend void fun(A& a1);
 };
 
 void fun(A& a1)

@@ -17,8 +17,8 @@ int main()
 {
 	try 
 	{
-		Test t1;
-		throw 10;
+		Test t1; //ctor will be called
+		throw 10; //dtor will be called and then catch will be called.....
 	} 
 	catch(int i) 
 	{
