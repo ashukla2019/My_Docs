@@ -234,6 +234,14 @@ char* mystrcat(char* dest, const char*src)
 	return dest;
 }
 // Function to implement strcmp function
+/*
+strcmp returns value:
+1) if first non matching character has lower ascii value in s1 than s2(returns <0)
+2) if both strings are equal(returns 0)
+3) if first non matching character has higher ascii value in s1 than s2(returns >0)
+
+*/
+
 int strcmp(const char *X, const char *Y)
 {
 	while(*X)
@@ -334,15 +342,6 @@ string isPalindrome(string S)
     return "Yes";
 }
 
-int main()
-{
-	char *str1 = "geeks";
-    char *str2 = "forgeeks";
-    swap(str1, str2);
-	return 0;
-}
-
-
 //Reverse String: 
 /*Write a function that reverses a string. The input string is given as an array of characters s.
 Input: s = ["h","e","l","l","o"]
@@ -390,7 +389,7 @@ int firstUniqueChar(string s)
    
    for(char c: s)
    {
-	   count[c-'a'] += 1;
+	   count[c-'a'] += 1; // 'b' - 'a' = convert ascii value and diff will give index.
    }
    for(int i=0; i<s.length(); i++)
    {
@@ -413,6 +412,32 @@ bool isAnagram(string s, string t)
 	sort(s.begin(), s.end());
 	sort(t.begin(), t.end());
 	return s == t; 
+}
+
+//Group of anagram:
+//Given an array of strings strs, group the anagrams together. 
+//You can return the answer in any order.
+/*
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+*/
+vector<vector<string>> groupAnagrams(vector<string>& strs) 
+{
+	vector<vector<string>>ans;
+	//actually, key with value problem: input string will be key and corresponding
+	//vector of anagram string will be value.
+	map<string, vector<string>>mp;
+	for(string s: strs)
+	{
+		string t = s; 
+		sort(t.begin(), t.end());
+		mp[t].push_back(s);
+	}
+	for(auto i: mp)
+	{
+		ans.push_back(i.second); //map's second will have group of anagram....
+	}
+	return ans;
 }
 
 //Valid Palindrome:
@@ -448,7 +473,6 @@ bool isPalindrome(string s)
 	}
 	return true;
 }
-
 
 //Implement strstr:
 /*Input: haystack = "hello", needle = "ll"
@@ -521,14 +545,14 @@ return rtr;
 //Permutations of a given string :
 Input: ABC
 Output: ABC ACB BAC BCA CAB CBA
-vector<string>find_permutation(string S)
+vector<string>find_permutation(string str)
 {
      vector<string> s;
-     sort(S.begin(), S.end());  
+     sort(str.begin(), str.end());  
      do
      {
-     	s.push_back(S);
-     }while(next_permutation(S.begin(),S.end()));
+     	s.push_back(str);
+     }while(next_permutation(str.begin(),str.end()));
      return s;
 }
 
@@ -537,14 +561,14 @@ Input: S = "zvvo"
 Output: "zvo"
 Explanation: Only keep the first occurrence
 
-string removeDups(string S) 
+string removeDups(string s) 
 {
     string str="";
-for(int i=0;i<S.length();i++)
+for(int i=0;i<s.length();i++)
 {
-    if(str.find(S[i])==-1)
+    if(str.find(s[i])==-1) //if str[i] reaches to -1, means character not found.
     {
-	str=str+S[i];
+		str=str+s[i];
     }
     else
     {
@@ -576,20 +600,20 @@ return str;
 //Convert string to int:
 int myAtoi(string s) 
 {
-int res =0;
-int sign =1;
-int i=0;
+	int res =0;
+	int sign =1;
+	int i=0;
 
-if(s[0] == '-')
-{
-    sign = -1;
-    i++;
-}
-for(; s[i] != '\0'; ++i)
-{
-    res = res*10 + s[i] - '0'; // s[i] - '0' -> convert character into num
-}
-return (sign*res);
+	if(s[0] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	for(; s[i] != '\0'; ++i)
+	{
+		res = res*10 + s[i] - '0'; // s[i] - '0' -> convert character into num
+	}
+	return (sign*res);
 }
 
 int main()

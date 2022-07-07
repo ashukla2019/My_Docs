@@ -20,15 +20,32 @@ int getOddOccurrence(int ar[], int ar_size)
 } 
 
 // Function to remove duplicate elements from sorted array
-void removeDuplicates(int arr[], int n)
+// This function returns new size of modified
+// array. Time Complexity : O(n), Auxiliary Space : O(1)
+int removeDuplicates(int arr[], int n)
 {
+    if (n==0 || n==1)
+    {
+        return n;
+    }
 
-	set<int>s(arr, arr+n);
-	cout << "\nAfter removing duplicates:\n";
-	for (auto it = s.begin(); it != s.end(); ++it)
-		cout << *it << ", ";
-	cout << '\n';
+    // To store index of next unique element
+    int j = 0;
+
+     // Doing same as done in Method 1
+    // Just maintaining another updated index i.e. j
+    for (int i=1; i < n-1; i++)
+    {
+        if (arr[i] != arr[j])
+        {
+            j++;
+            arr[j] = arr[i];
+        }
+    }
+
+    return j+1;
 }
+
 
 // Function to remove duplicate elements from unsorted array
 vector<int> removeDuplicate(int A[], int N) 
@@ -108,7 +125,6 @@ void findMajority(int arr[], int size)
 }
 
 
-
 //C function to find maximum in arr[] of size n
 int largest(int arr[], int n) {
     int i;
@@ -137,7 +153,7 @@ int* game_with_number(int arr[], int n)
     return arr;
     
 }
-//Cylendrically rotate an array by one
+//Cylindrically rotate an array by one
 void rotate(int arr[], int n)
 {
     int x = arr[n-1];
@@ -146,24 +162,6 @@ void rotate(int arr[], int n)
         arr[i] = arr[i-1];
     }
     arr[0] = x;
-}
-
-
-//Remove Duplicates from Sorted Array:
-/*
-Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that
-each unique element appears only once. The relative order of the elements should be kept the same.
-
-Input: nums = [1,1,2]
-Output: 2, nums = [1,2,_]
-Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
-It does not matter what you leave beyond the returned k (hence they are underscores).
-*/
-//Solution:
-int removeDuplicates(vector<int>& nums) 
-{
-	auto it = unique(nums.begin(), nums.end());
-    return distance(nums.begin(),it);  //distance return number of elements b/w two position/iterators
 }
 
 //Best Time to Buy and Sell Stock II

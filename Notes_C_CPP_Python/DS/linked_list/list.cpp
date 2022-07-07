@@ -381,3 +381,24 @@ ListNode* flatten(ListNode* root)
 //merge(10,19) will be done now same way, merged returned list will be assigned to next caller
 //(5->next = 10)....
 
+//Remove Duplicates from Sorted List
+ListNode* deleteDuplicates(ListNode* head) {
+        if(head==NULL) return NULL;
+        if(head->next == NULL) return head;
+        
+        ListNode* curr = head;
+        while(curr->next != NULL)
+        {
+            if(curr->val == curr->next->val)
+            {
+                ListNode* temp = curr->next;
+                curr->next = temp->next;
+                delete(temp);
+            }
+            else
+            {
+                curr = curr->next;
+            }
+        }
+        return head;
+    }
