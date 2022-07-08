@@ -288,28 +288,69 @@ void removeLoop(ListNode* loop_node, ListNode* head)
       to fix the loop */
     ptr2->next = NULL;
 }  
-  
-int detectAndRemoveLoop(ListNode* list)
+ 
+//Detect if cycle in linked list.... 
+bool hasCycle(ListNode *head) 
 {
-    ListNode *slow_p = list, *fast_p = list;
+	ListNode* slow = head, *fast = head;
+	while(fast && fast->next)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+		if(slow == fast)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
 
-    // Iterate and find if loop exists or not
-    while (slow_p && fast_p && fast_p->next) {
-        slow_p = slow_p->next;
-        fast_p = fast_p->next->next;
+//Detect position where cycle starts from...
+ListNode *detectCycle(ListNode *head) 
+    {
+        if (!head) return NULL;
+        ListNode * slow = head, * fast = head;
 
-        /* If slow_p and fast_p meet at some point then there
-           is a loop */
-        if (slow_p == fast_p) {
-            removeLoop(slow_p, list);
+        while (fast and fast -> next) 
+        {
+            slow = slow -> next;
+            fast = fast -> next -> next;
+            if (slow == fast) 
+            {
+                fast = fast;
+                slow = head;
 
-            /* Return 1 to indicate that loop is found */
-            return 1;
+                while (slow != fast) 
+                {
+                    slow = slow -> next;
+                    fast = fast -> next;
+                }
+            }
+            return slow; //this is the point where loop starts....
+			//we can count loop value by...while(slow != fast) {slow = slow->next; fast= fast->next}
         }
+      return NULL;
+
     }
 
-    /* Return 0 to indicate that there is no loop*/
-    return 0;
+};
+
+//Remove duplicates from shorted list:
+ListNode* deleteDuplicates(ListNode* head) 
+{
+	ListNode* curr = head;
+	while (curr && curr->next) 
+	{
+		if (curr->val == curr->next->val)
+		{
+			curr->next = curr->next->next;
+		}
+		else
+		{
+			curr = curr->next;
+		}
+	}
+	return head;
 }
 
 /*

@@ -377,32 +377,6 @@ int reverse(int x)
 }
 
 
-//First unique character:
-/*Given a string s, find the first non-repeating character in it and return its index. 
-If it does not exist, return -1.
-*/
-//Input: s = "leetcode"
-//Output: 0
-int firstUniqueChar(string s) 
-{
-   int count[26] = {0};
-   
-   for(char c: s)
-   {
-	   count[c-'a'] += 1; // 'b' - 'a' = convert ascii value and diff will give index.
-   }
-   for(int i=0; i<s.length(); i++)
-   {
-	   if(count[s[i] - 'a'] == 1)
-	   {
-		   return i;
-	   }
-	   
-   }
-	return -1;
-	
-}
-
 //Valid Anagram:Given two strings s and t, return true if t is an anagram of s, and false otherwise.
 /*An anagram of a string is another string that contains the same characters, only the order of 
 characters can be different. For example, “abcd” and “dabc” are an anagram of each other.
@@ -414,31 +388,6 @@ bool isAnagram(string s, string t)
 	return s == t; 
 }
 
-//Group of anagram:
-//Given an array of strings strs, group the anagrams together. 
-//You can return the answer in any order.
-/*
-Input: strs = ["eat","tea","tan","ate","nat","bat"]
-Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
-*/
-vector<vector<string>> groupAnagrams(vector<string>& strs) 
-{
-	vector<vector<string>>ans;
-	//actually, key with value problem: input string will be key and corresponding
-	//vector of anagram string will be value.
-	map<string, vector<string>>mp;
-	for(string s: strs)
-	{
-		string t = s; 
-		sort(t.begin(), t.end());
-		mp[t].push_back(s);
-	}
-	for(auto i: mp)
-	{
-		ans.push_back(i.second); //map's second will have group of anagram....
-	}
-	return ans;
-}
 
 //Valid Palindrome:
 /*

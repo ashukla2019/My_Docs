@@ -71,4 +71,41 @@ vector<int> intersection(vector<int>& nums1, vector<int>& nums2)
 	return res;
 }
 
+//First Unique Character in a String:
+/*Given a string s, find the first non-repeating character in it and return
+//its index. If it does not exist, return -1.
+*/
+int firstUniqChar(string s)
+{
+	unordered_map<char, int> m;
+	for (char& c : s) 
+	{
+		m[c]++;
+	}
+	for (int i = 0; i < s.size(); i++) 
+	{
+		if (m[s[i]] == 1) return i;
+	}
+	return -1;
+}
+
+//House rob:
+/*
+You are a professional robber planning to rob houses along a street. 
+Each house has a certain amount of money stashed, the only constraint stopping
+you from robbing each of them is that adjacent houses have security systems 
+connected and it will automatically contact the police if two adjacent houses 
+were broken into on the same night.
+*/
+int rob(vector<int>& nums) 
+{ 
+	int n = nums.size(), pre = 0, cur = 0;
+	for (int i = 0; i < n; i++) 
+	{
+		int temp = max(pre + nums[i], cur);
+		pre = cur;
+		cur = temp;
+	 }
+	return cur;
+}
 
