@@ -89,7 +89,7 @@ int rob(vector<int>& nums)
 	return max(robOriginal(numsA), robOriginal(numsB));
 }
 
-//Best Time to Buy and Sell Stock II
+//Best Time to Buy and Sell Stock -1
 /*
 You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
 On each day, you may decide to buy and/or sell the stock. You can only hold at most one share 
@@ -104,20 +104,14 @@ Total profit is 4 + 3 = 7.
 */
 int maxProfit(vector<int>& prices) 
 {
-    int profit = 0;
-    if(prices.size() == 0)
-    {
-		return 0;
-    }
-    else
-    {
-		for(int i =0; i<prices.size()-1; i++)
-        {
-			if(prices[i+1]>prices[i])
-            {
-				profit = profit + (prices[i+1]-prices[i]);
-            }
-        }
-    }
-    return profit;
-
+	int maxProfit = 0;
+	int minPrice = INT_MAX;
+	//Time complexity:O(n), space complexity:(1)
+	for(int i=0; i<prices.size(); i++)
+	{
+		minPrice = min(minPrice, prices[i]);
+		maxProfit = max(maxProfit, prices[i]-minPrice);
+	}
+	return maxProfit;
+	
+}
